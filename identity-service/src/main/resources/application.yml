@@ -1,0 +1,28 @@
+server:
+  port: 8090
+  servlet:
+    context-path: /identity-service
+
+spring:
+  application:
+    name: identity-service
+
+  jpa:
+    open-in-view: false
+    show-sql: true
+    database-platform: org.hibernate.dialect.PostgreSQL9Dialect
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQL9Dialect
+  datasource:
+    url: jdbc:postgresql://localhost:5432/post-at?currentSchema=public&binaryTransfer=true&reWriteBatchedInserts=true
+    username: postgres
+    password: admin
+    driver-class-name: org.postgresql.Driver
+    platform: postgres
+    schema: classpath:init-schema.sql
+    initialization-mode: always
+
+jwt:
+  secret: vMTV7Oo6vZpGhHK7vVnrP6d+Rl8qOu5YkN2ZlTDPBu4=
+  expiration: 86400000
