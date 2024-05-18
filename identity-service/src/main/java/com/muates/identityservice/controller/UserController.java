@@ -21,8 +21,7 @@ public class UserController {
         return ResponseEntity.ok(savedUser);
     }
 
-    // Sadece admin rolundekiler çekebilir!!!!
-    @GetMapping("/getall")
+    @GetMapping("/all")
     public ResponseEntity<List<User>> getAllUser() {
         return ResponseEntity.ok(userService.findAll());
     }

@@ -24,5 +24,4 @@ spring:
     initialization-mode: always
 
 jwt:
-  secret: vMTV7Oo6vZpGhHK7vVnrP6d+Rl8qOu5YkN2ZlTDPBu4=
   expiration: 86400000
