@@ -20,6 +20,8 @@
         <spring-boot.version>2.3.4.RELEASE</spring-boot.version>
         <lombok.version>1.18.24</lombok.version>
         <postgresql.version>42.2.16</postgresql.version>
+        <spring-cloud-dependencies.version>Hoxton.SR9</spring-cloud-dependencies.version>
+        <spring-cloud.version>2.2.8.RELEASE</spring-cloud.version>
     </properties>
 
     <dependencies>
@@ -76,6 +78,13 @@
             <scope>runtime</scope>
         </dependency>
 
+        <!-- Spring Cloud Starter Netflix Eureka Client -->
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
+            <version>${spring-cloud.version}</version>
+        </dependency>
+
         <!-- Spring Boot Starter Test -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -84,6 +93,18 @@
             <scope>test</scope>
         </dependency>
     </dependencies>
+
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>org.springframework.cloud</groupId>
+                <artifactId>spring-cloud-dependencies</artifactId>
+                <version>${spring-cloud-dependencies.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
 
     <build>
         <plugins>

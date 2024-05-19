@@ -25,3 +25,8 @@ spring:
 
 jwt:
   expiration: 86400000
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka/
