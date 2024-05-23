@@ -1,0 +1,35 @@
+server:
+  port: 8000 # Gateway'in çalışacağı port
+
+identity-service:
+  url: http://localhost:8090/identity-service # Identity service'in çalıştığı adres ve port
+
+spring:
+  application:
+    name: gateway-service
+  cloud:
+    gateway:
+      routes:
+        - id: identity-service
+          uri: http://localhost:8090/identity-service
+          predicates:
+            - Path=/api/auth/**
+
+        - id: example-service
+          uri: lb://example-service
+          predicates:
+            - Path=/api/examples/**
+          filters:
+            - JwtAuthenticationFilter
+
+      discovery:
+        locator:
+          enabled: true
+          lower-case-service-id: true
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka/ # Eureka server adresi
+  instance:
+    prefer-ip-address: true
