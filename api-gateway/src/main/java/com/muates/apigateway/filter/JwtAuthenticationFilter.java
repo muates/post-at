@@ -5,6 +5,7 @@ import org.springframework.cloud.gateway.filter.GatewayFilter;
 import org.springframework.cloud.gateway.filter.factory.AbstractGatewayFilterFactory;
 import org.springframework.http.*;
 import org.springframework.http.server.reactive.ServerHttpRequest;
+import org.springframework.http.server.reactive.ServerHttpResponse;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.HttpStatusCodeException;
 import org.springframework.web.client.RestClientException;
@@ -41,18 +42,16 @@ public class JwtAuthenticationFilter extends AbstractGatewayFilterFactory<JwtAut
             HttpEntity<Void> entity = new HttpEntity<>(headers);
 
             try {
-                ResponseEntity<Void> response = restTemplate.exchange(validateEndpoint, HttpMethod.GET, entity, Void.class);
+                ResponseEntity<String> response = restTemplate.exchange(validateEndpoint, HttpMethod.GET, entity, String.class);
                 if (response.getStatusCode().is2xxSuccessful()) {
                     return chain.filter(exchange);
                 }
 
-                return handleErrorResponse(exchange, response.getStatusCode());
+                return handleErrorResponse(exchange, response.getStatusCode(), response.getBody());
+            } catch (HttpStatusCodeException e) {
+                return handleErrorResponse(exchange, e.getStatusCode(), e.getResponseBodyAsString());
             } catch (RestClientException e) {
-                HttpStatus httpStatus = HttpStatus.INTERNAL_SERVER_ERROR;
-                if (e instanceof HttpStatusCodeException) {
-                    httpStatus = ((HttpStatusCodeException) e).getStatusCode();
-                }
-                return handleErrorResponse(exchange, httpStatus);
+                return handleErrorResponse(exchange, HttpStatus.INTERNAL_SERVER_ERROR, null);
             }
         };
     }
@@ -66,12 +65,18 @@ public class JwtAuthenticationFilter extends AbstractGatewayFilterFactory<JwtAut
         return request.getURI().getPath();
     }
 
-    private Mono<Void> handleErrorResponse(ServerWebExchange exchange, HttpStatus status) {
+    private Mono<Void> handleErrorResponse(ServerWebExchange exchange, HttpStatus status, String responseBody) {
         if (exchange.getResponse().isCommitted()) {
             return Mono.empty();
         }
-        exchange.getResponse().setStatusCode(status);
-        return exchange.getResponse().setComplete();
+        ServerHttpResponse response = exchange.getResponse();
+        response.setStatusCode(status);
+        if (responseBody != null) {
+            response.getHeaders().setContentType(MediaType.TEXT_PLAIN);
+            return response.writeWith(Mono.just(response.bufferFactory().wrap(responseBody.getBytes())));
+        } else {
+            return response.setComplete();
+        }
     }
 
     private String extractToken(ServerHttpRequest request) {
