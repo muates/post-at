@@ -13,3 +13,11 @@ CREATE TABLE IF NOT EXISTS user_roles (
     PRIMARY KEY (user_id, roles),
     FOREIGN KEY (user_id) REFERENCES users (id)
 );
+
+CREATE TABLE IF NOT EXISTS role_permissions (
+    id SERIAL PRIMARY KEY,
+    role VARCHAR(255) NOT NULL,
+    endpoint VARCHAR(255) NOT NULL,
+    UNIQUE(role, endpoint)
+);
+
