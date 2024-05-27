@@ -1,8 +1,8 @@
 server:
-  port: 8000 # Gateway'in çalışacağı port
+  port: 8000
 
 identity-service:
-  url: http://localhost:8090/identity-service # Identity service'in çalıştığı adres ve port
+  url: http://localhost:8090/identity-service
 
 spring:
   application:
@@ -30,6 +30,6 @@ spring:
 eureka:
   client:
     service-url:
-      defaultZone: http://localhost:8761/eureka/ # Eureka server adresi
+      defaultZone: http://localhost:8761/eureka/
   instance:
     prefer-ip-address: true
