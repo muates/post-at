@@ -3,12 +3,12 @@ package com.muates.apigateway.filter;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cloud.gateway.filter.GatewayFilter;
 import org.springframework.cloud.gateway.filter.factory.AbstractGatewayFilterFactory;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
+import org.springframework.http.*;
 import org.springframework.http.server.reactive.ServerHttpRequest;
 import org.springframework.stereotype.Component;
-import org.springframework.web.reactive.function.client.ClientResponse;
-import org.springframework.web.reactive.function.client.WebClient;
+import org.springframework.web.client.HttpStatusCodeException;
+import org.springframework.web.client.RestClientException;
+import org.springframework.web.client.RestTemplate;
 import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Mono;
 
@@ -18,34 +18,42 @@ public class JwtAuthenticationFilter extends AbstractGatewayFilterFactory<JwtAut
     @Value("${identity-service.url}")
     private String identityServiceUrl;
 
-    private final WebClient.Builder webClientBuilder;
+    private final RestTemplate restTemplate;
 
-    public JwtAuthenticationFilter(WebClient.Builder webClientBuilder) {
+    public JwtAuthenticationFilter(RestTemplate restTemplate) {
         super(Config.class);
-        this.webClientBuilder = webClientBuilder;
+        this.restTemplate = restTemplate;
     }
 
     @Override
     public GatewayFilter apply(Config config) {
         return (exchange, chain) -> {
-            String token = extractToken((ServerWebExchange) exchange.getRequest());
+            String token = extractToken(exchange.getRequest());
             if (token == null) {
                 return unauthorized(exchange);
             }
 
             String requestUrl = extractRequestUrl(exchange.getRequest());
+            String validateEndpoint = identityServiceUrl + "/api/auth/validate?url=" + requestUrl;
 
-            return webClientBuilder.build()
-                    .get()
-                    .uri(uriBuilder -> uriBuilder
-                            .path(identityServiceUrl + "/api/auth/validate")
-                            .queryParam("url", requestUrl)
-                            .build())
-                    .header(HttpHeaders.AUTHORIZATION, "Bearer " + token)
-                    .retrieve()
-                    .onStatus(HttpStatus::isError, response -> handleErrorResponse(response, exchange))
-                    .bodyToMono(Void.class)
-                    .then(chain.filter(exchange));
+            HttpHeaders headers = new HttpHeaders();
+            headers.set(HttpHeaders.AUTHORIZATION, "Bearer " + token);
+            HttpEntity<Void> entity = new HttpEntity<>(headers);
+
+            try {
+                ResponseEntity<Void> response = restTemplate.exchange(validateEndpoint, HttpMethod.GET, entity, Void.class);
+                if (response.getStatusCode().is2xxSuccessful()) {
+                    return chain.filter(exchange);
+                }
+
+                return handleErrorResponse(exchange, response.getStatusCode());
+            } catch (RestClientException e) {
+                HttpStatus httpStatus = HttpStatus.INTERNAL_SERVER_ERROR;
+                if (e instanceof HttpStatusCodeException) {
+                    httpStatus = ((HttpStatusCodeException) e).getStatusCode();
+                }
+                return handleErrorResponse(exchange, httpStatus);
+            }
         };
     }
 
@@ -58,18 +66,16 @@ public class JwtAuthenticationFilter extends AbstractGatewayFilterFactory<JwtAut
         return request.getURI().getPath();
     }
 
-    private Mono<? extends Throwable> handleErrorResponse(ClientResponse response, ServerWebExchange exchange) {
-        HttpStatus httpStatus = response.statusCode();
-        if (httpStatus == HttpStatus.UNAUTHORIZED) {
-            exchange.getResponse().setStatusCode(HttpStatus.FORBIDDEN);
-        } else {
-            exchange.getResponse().setStatusCode(httpStatus);
+    private Mono<Void> handleErrorResponse(ServerWebExchange exchange, HttpStatus status) {
+        if (exchange.getResponse().isCommitted()) {
+            return Mono.empty();
         }
-        return exchange.getResponse().setComplete().then(Mono.empty());
+        exchange.getResponse().setStatusCode(status);
+        return exchange.getResponse().setComplete();
     }
 
-    private String extractToken(ServerWebExchange exchange) {
-        String bearerToken = exchange.getRequest().getHeaders().getFirst("Authorization");
+    private String extractToken(ServerHttpRequest request) {
+        String bearerToken = request.getHeaders().getFirst(HttpHeaders.AUTHORIZATION);
         if (bearerToken != null && bearerToken.startsWith("Bearer ")) {
             return bearerToken.substring(7);
         }
