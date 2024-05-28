@@ -15,13 +15,6 @@ spring:
           predicates:
             - Path=/api/auth/**
 
-        - id: example-service
-          uri: lb://example-service
-          predicates:
-            - Path=/api/examples/**
-          filters:
-            - JwtAuthenticationFilter
-
       discovery:
         locator:
           enabled: true
