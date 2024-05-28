@@ -1,0 +1,28 @@
+server:
+  port: 8000
+
+identity-service:
+  url: http://localhost:8090/identity-service
+
+spring:
+  application:
+    name: gateway-service
+  cloud:
+    gateway:
+      routes:
+        - id: identity-service
+          uri: http://localhost:8090/identity-service
+          predicates:
+            - Path=/api/auth/**
+
+      discovery:
+        locator:
+          enabled: true
+          lower-case-service-id: true
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka/
+  instance:
+    prefer-ip-address: true
