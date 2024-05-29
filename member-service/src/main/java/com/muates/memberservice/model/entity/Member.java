@@ -36,6 +36,7 @@ public class Member {
     private String lastName;
 
     @Enumerated(EnumType.STRING)
+    @Column(length = 10)
     private Gender gender;
 
     private Date birthDate;
