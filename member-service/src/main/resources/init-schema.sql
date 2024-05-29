@@ -1,12 +1,10 @@
-CREATE TYPE gender_type AS ENUM ('MALE', 'FEMALE', 'OTHER');
-
-CREATE TABLE members (
+CREATE TABLE IF NOT EXISTS members (
     id BIGINT PRIMARY KEY,
     username VARCHAR(50) NOT NULL UNIQUE,
     email VARCHAR(100) NOT NULL UNIQUE,
-    first_name VARCHAR(50) NOT NULL,
-    last_name VARCHAR(50) NOT NULL,
-    gender gender_type,
+    first_name VARCHAR(50),
+    last_name VARCHAR(50),
+    gender VARCHAR(10),
     birth_date DATE,
     country VARCHAR(50),
     profile_image_url VARCHAR(255),
