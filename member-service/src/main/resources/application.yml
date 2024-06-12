@@ -1,7 +1,5 @@
 server:
   port: 8095
-  servlet:
-    context-path: /member-service
 
 spring:
   application:
