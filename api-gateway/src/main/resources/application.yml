@@ -2,7 +2,7 @@ server:
   port: 8000
 
 identity-service:
-  url: http://localhost:8090/identity-service
+  url: http://localhost:8090
 
 spring:
   application:
@@ -11,9 +11,16 @@ spring:
     gateway:
       routes:
         - id: identity-service
-          uri: http://localhost:8090/identity-service
+          uri: lb://identity-service
           predicates:
             - Path=/api/auth/**
+
+        - id: member-service
+          uri: lb://member-service
+          predicates:
+            - Path=/api/**
+          filters:
+            - JwtAuthenticationFilter
 
       discovery:
         locator:

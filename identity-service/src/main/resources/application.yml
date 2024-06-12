@@ -1,7 +1,5 @@
 server:
   port: 8090
-  servlet:
-    context-path: /identity-service
 
 spring:
   application:

@@ -8,6 +8,6 @@ import org.springframework.data.repository.query.Param;
 import java.util.List;
 
 public interface RolePermissionRepository extends JpaRepository<RolePermission, Long> {
-    @Query("SELECT rp.role FROM RolePermission rp WHERE rp.endpoint = :endpoint")
+    @Query(value = "SELECT rp.role FROM role_permissions rp WHERE :endpoint ~ rp.endpoint", nativeQuery = true)
     List<String> findRoleByEndpoint(@Param("endpoint") String endpoint);
 }

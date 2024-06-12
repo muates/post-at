@@ -5,6 +5,7 @@ import com.muates.memberservice.model.dto.request.MemberUpdateRequest;
 import com.muates.memberservice.model.dto.response.MemberResponse;
 import com.muates.memberservice.model.entity.Member;
 
+import java.util.Date;
 import java.util.Optional;
 import java.util.function.Consumer;
 
@@ -37,6 +38,7 @@ public class MemberConverter {
         updateField(request.getWebsite(), member::setWebsite);
         updateField(request.getLinks(), member::setLinks);
         updateField(request.getSocialMediaLinks(), member::setSocialMediaLinks);
+        member.setUpdatedDate(new Date());
 
         return member;
     }

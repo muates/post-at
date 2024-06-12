@@ -78,6 +78,12 @@
             <scope>runtime</scope>
         </dependency>
 
+        <!-- Spring Cloud Starter OpenFeign -->
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-openfeign</artifactId>
+        </dependency>
+
         <!-- Spring Cloud Starter Netflix Eureka Client -->
         <dependency>
             <groupId>org.springframework.cloud</groupId>
