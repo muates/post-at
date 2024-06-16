@@ -10,7 +10,7 @@ CREATE TABLE IF NOT EXISTS post_media (
     id SERIAL PRIMARY KEY,
     post_id INT NOT NULL REFERENCES posts(id),
     media_url VARCHAR(255) NOT NULL,
-    media_type VARCHAR(50) NOT NULL CHECK (media_type IN ('image', 'video')),
+    media_type VARCHAR(50) NOT NULL CHECK (media_type IN ('IMAGE', 'VIDEO')),
     created_date TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
 );
 
