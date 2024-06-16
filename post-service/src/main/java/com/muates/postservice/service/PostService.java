@@ -7,4 +7,5 @@ import org.springframework.data.domain.Page;
 public interface PostService {
     Post createPost(PostCreateRequest request);
     Page<Post> getAllPostByUserId(Long userId, int page, int size);
+    void deletePost(Long postId);
 }

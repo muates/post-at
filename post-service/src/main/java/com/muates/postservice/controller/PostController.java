@@ -40,4 +40,9 @@ public class PostController {
 
         return ResponseEntity.ok(postList);
     }
+
+    @DeleteMapping("/delete/{postId}")
+    public void deletePost(@PathVariable Long postId) {
+        postService.deletePost(postId);
+    }
 }
