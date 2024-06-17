@@ -2,16 +2,13 @@ package com.muates.postservice.controller;
 
 import com.muates.postservice.converter.PostConverter;
 import com.muates.postservice.model.dto.request.PostCreateRequest;
+import com.muates.postservice.model.dto.request.PostUpdateRequest;
 import com.muates.postservice.model.dto.response.PostResponse;
-import com.muates.postservice.model.entity.Post;
 import com.muates.postservice.service.PostService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
-import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/post")
@@ -27,18 +24,23 @@ public class PostController {
     }
 
     @GetMapping("/user/{userId}")
-    public ResponseEntity<List<PostResponse>> getAllPostByUserId(
+    public ResponseEntity<Page<PostResponse>> getAllPostByUserId(
             @PathVariable Long userId,
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "10") int size
     ) {
-        Page<Post> postPage = postService.getAllPostByUserId(userId, page, size);
+        Page<PostResponse> response = postService.getAllPostByUserId(userId, page, size)
+                .map(PostConverter::convertPostToResponse);
+        return ResponseEntity.ok(response);
+    }
 
-        List<PostResponse> postList = postPage.stream()
-                .map(PostConverter::convertPostToResponse)
-                .collect(Collectors.toList());
-
-        return ResponseEntity.ok(postList);
+    @PutMapping("/update/{postId}")
+    public ResponseEntity<PostResponse> updatePost(
+            @PathVariable Long postId,
+            @RequestBody PostUpdateRequest request
+    ) {
+        PostResponse response = PostConverter.convertPostToResponse(postService.updatePost(postId, request));
+        return ResponseEntity.ok(response);
     }
 
     @DeleteMapping("/delete/{postId}")

@@ -2,7 +2,9 @@ package com.muates.postservice.service.impl;
 
 import com.muates.postservice.converter.PostConverter;
 import com.muates.postservice.converter.PostMediaConverter;
+import com.muates.postservice.exception.PostNotFoundException;
 import com.muates.postservice.model.dto.request.PostCreateRequest;
+import com.muates.postservice.model.dto.request.PostUpdateRequest;
 import com.muates.postservice.model.entity.Post;
 import com.muates.postservice.model.entity.PostMedia;
 import com.muates.postservice.repository.PostMediaRepository;
@@ -15,6 +17,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -47,6 +50,19 @@ public class PostServiceImpl implements PostService {
     public Page<Post> getAllPostByUserId(Long userId, int page, int size) {
         Pageable pageable = PageRequest.of(page, size);
         return postRepository.findByUserId(userId, pageable);
+    }
+
+    @Override
+    public Post getPostByPostId(Long postId) {
+        return postRepository.findById(postId).orElseThrow(() -> new PostNotFoundException("Post does not found!"));
+    }
+
+    @Override
+    public Post updatePost(Long postId, PostUpdateRequest request) {
+        Post existPost = getPostByPostId(postId);
+        existPost.setContent(request.getContent());
+        existPost.setUpdatedDate(new Date());
+        return postRepository.save(existPost);
     }
 
     @Override
