@@ -18,7 +18,14 @@ spring:
         - id: member-service
           uri: lb://member-service
           predicates:
-            - Path=/api/**
+            - Path=/api/member/**
+          filters:
+            - JwtAuthenticationFilter
+
+        - id: post-service
+          uri: lb://post-service
+          predicates:
+            - Path=/api/post/**
           filters:
             - JwtAuthenticationFilter
 
