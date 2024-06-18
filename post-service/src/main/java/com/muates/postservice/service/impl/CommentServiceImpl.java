@@ -30,10 +30,14 @@ public class CommentServiceImpl implements CommentService {
     }
 
     @Override
-    public void updateComment(Long commentId, CommentUpdateRequest request) {
-        PostComment existComment = postCommentRepository.findById(commentId)
+    public PostComment getCommentByCommentId(Long commentId) {
+        return postCommentRepository.findById(commentId)
                 .orElseThrow(() -> new CommentNotFoundException("Comment does not found!"));
+    }
 
+    @Override
+    public void updateComment(Long commentId, CommentUpdateRequest request) {
+        PostComment existComment = getCommentByCommentId(commentId);
         existComment.setContent(request.getContent());
         existComment.setUpdatedDate(new Date());
         postCommentRepository.save(existComment);
