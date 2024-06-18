@@ -9,6 +9,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 @FeignClient(name = "member-service")
 public interface MemberServiceClient {
 
-    @PostMapping("/member-service/api/member/create")
+    @PostMapping("/api/member/create")
     ResponseEntity<MemberResponseClient> createMember(MemberCreateRequestClient request);
 }
