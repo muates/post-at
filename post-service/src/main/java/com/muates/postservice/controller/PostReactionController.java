@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/api/post-reaction")
+@RequestMapping("/api/post/post-reaction")
 @RequiredArgsConstructor
 public class PostReactionController {
 
