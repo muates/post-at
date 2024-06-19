@@ -21,7 +21,7 @@ public class PostCommentLike {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @ManyToOne(optional = false)
     @JoinColumn(name = "comment_id", nullable = false)
     private PostComment comment;
 

@@ -24,7 +24,7 @@ public class PostLike {
     @Column(nullable = false)
     private Long userId;
 
-    @ManyToOne(fetch = FetchType.EAGER, optional = false)
+    @ManyToOne(optional = false)
     @JoinColumn(name = "post_id", nullable = false)
     private Post post;
 

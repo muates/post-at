@@ -4,8 +4,6 @@ import com.muates.postservice.model.dto.request.PostCreateRequest;
 import com.muates.postservice.model.dto.response.PostResponse;
 import com.muates.postservice.model.entity.Post;
 
-import java.util.Collections;
-
 public class PostConverter {
 
     public static Post convertPostCreateRequestToPost(PostCreateRequest request) {
@@ -31,8 +29,8 @@ public class PostConverter {
                 .createdDate(post.getCreatedDate())
                 .updatedDate(post.getUpdatedDate())
                 .media(PostMediaConverter.convertPostMediaToResponse(post.getMedia()))
-                .likes(Collections.emptyList())
-                .comments(Collections.emptyList())
+                .likes(PostLikeConverter.convertPostLikeToResponse(post.getLikes()))
+                .comments(PostCommentConverter.convertPostCommentToResponse(post.getComments()))
                 .build();
     }
 }
