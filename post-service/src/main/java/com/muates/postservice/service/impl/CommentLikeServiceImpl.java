@@ -1,9 +1,13 @@
 package com.muates.postservice.service.impl;
 
+import com.muates.postservice.config.data.KafkaConfigData;
+import com.muates.postservice.converter.SocialInteractionNotificationConverter;
 import com.muates.postservice.exception.CommentAlreadyLikedException;
+import com.muates.postservice.model.avro.SocialInteractionNotificationAvro;
 import com.muates.postservice.model.dto.request.CommentReactionRequest;
 import com.muates.postservice.model.entity.PostComment;
 import com.muates.postservice.model.entity.PostCommentLike;
+import com.muates.postservice.producer.KafkaProducer;
 import com.muates.postservice.repository.PostCommentLikeRepository;
 import com.muates.postservice.service.CommentLikeService;
 import com.muates.postservice.service.CommentService;
@@ -18,6 +22,8 @@ public class CommentLikeServiceImpl implements CommentLikeService {
 
     private final PostCommentLikeRepository postCommentLikeRepository;
     private final CommentService commentService;
+    private final KafkaConfigData kafkaConfigData;
+    private final KafkaProducer<Long, SocialInteractionNotificationAvro> kafkaProducer;
 
     @Override
     public void reactToComment(CommentReactionRequest request) {
@@ -26,6 +32,13 @@ public class CommentLikeServiceImpl implements CommentLikeService {
                         existLike -> updateExistReaction(existLike, request.getIsLike()),
                         () -> saveNewReaction(request)
                 );
+
+        kafkaProducer.send(
+                kafkaConfigData.getTopicNamesToCreate().get(0),
+                request.getCommentOwnerId(),
+                SocialInteractionNotificationConverter
+                        .convertToAvro(request.getUserId(), request.getPostId(), "Your comment has been liked", "COMMENT_LIKE")
+        );
     }
 
     private void updateExistReaction(PostCommentLike existLike, Boolean isLike) {

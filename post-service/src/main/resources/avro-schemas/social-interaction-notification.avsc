@@ -1,0 +1,16 @@
+{
+  "namespace": "com.muates.postservice.model.avro",
+  "type": "record",
+  "name": "SocialInteractionNotificationAvro",
+  "fields": [
+    {"name": "userId", "type": "long"},
+    {"name": "postId", "type": "long"},
+    {"name": "message", "type": "string"},
+    {"name": "type", "type": {
+          "type": "enum",
+          "name": "SocialInteractionType",
+          "symbols": ["POST_LIKE", "POST_COMMENT", "COMMENT_LIKE"]
+    }},
+    {"name": "timestamp", "type": "long"}
+  ]
+}

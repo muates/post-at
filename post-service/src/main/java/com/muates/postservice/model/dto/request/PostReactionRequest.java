@@ -11,4 +11,5 @@ public class PostReactionRequest {
     private Long postId;
     private Long userId;
     private Boolean isLike;
+    private Long postOwnerId;
 }

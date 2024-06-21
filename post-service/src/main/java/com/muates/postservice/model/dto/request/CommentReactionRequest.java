@@ -11,4 +11,6 @@ public class CommentReactionRequest {
     private Long commentId;
     private Long userId;
     private Boolean isLike;
+    private Long commentOwnerId;
+    private Long postId;
 }
