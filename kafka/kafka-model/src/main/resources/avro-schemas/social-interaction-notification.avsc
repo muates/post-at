@@ -1,5 +1,5 @@
 {
-  "namespace": "com.muates.postservice.model.avro",
+  "namespace": "com.muates.kafkamodel.avro",
   "type": "record",
   "name": "SocialInteractionNotificationAvro",
   "fields": [

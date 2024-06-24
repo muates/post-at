@@ -1,36 +1,28 @@
-package com.muates.postservice.config;
+package com.muates.kafkaadmin.client;
 
-import com.muates.postservice.config.data.KafkaConfigData;
+import com.muates.kafkaconfig.config.KafkaConfigData;
 import lombok.RequiredArgsConstructor;
-import org.apache.kafka.clients.CommonClientConfigs;
 import org.apache.kafka.clients.admin.AdminClient;
 import org.apache.kafka.clients.admin.NewTopic;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
 import org.springframework.kafka.config.TopicBuilder;
+import org.springframework.stereotype.Component;
 
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-@Configuration
+@Component
 @RequiredArgsConstructor
-public class KafkaTopicConfig {
+public class KafkaAdminClient {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(KafkaTopicConfig.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(KafkaAdminClient.class);
 
     private final KafkaConfigData kafkaConfigData;
+    private final AdminClient adminClient;
 
-    @Bean
-    public AdminClient adminClient() {
-        return AdminClient.create(Map.of(CommonClientConfigs.BOOTSTRAP_SERVERS_CONFIG, kafkaConfigData.getBootstrapServers()));
-    }
-
-    @Bean
-    public List<NewTopic> createTopics() {
+    public void createTopics() {
         List<NewTopic> newTopics = kafkaConfigData.getTopicNamesToCreate().stream()
                 .map(topicName -> TopicBuilder
                         .name(topicName)
@@ -40,15 +32,15 @@ public class KafkaTopicConfig {
                 .collect(Collectors.toList());
 
         try {
-            Set<String> existingTopics = adminClient().listTopics().names().get();
+            Set<String> existingTopics = adminClient.listTopics().names().get();
 
             var topicsToCreate = newTopics.stream()
                     .filter(topic -> !existingTopics.contains(topic.name()))
                     .collect(Collectors.toList());
 
-            logTopics(newTopics);
+            logTopics(topicsToCreate);
 
-            return topicsToCreate;
+            adminClient.createTopics(topicsToCreate);
         } catch (Exception e) {
             throw new RuntimeException("Error checking existing topics", e);
         }
