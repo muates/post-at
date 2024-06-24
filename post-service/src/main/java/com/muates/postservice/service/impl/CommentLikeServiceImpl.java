@@ -1,13 +1,13 @@
 package com.muates.postservice.service.impl;
 
-import com.muates.postservice.config.data.KafkaConfigData;
+import com.muates.kafkaconfig.config.KafkaConfigData;
+import com.muates.kafkamodel.avro.SocialInteractionNotificationAvro;
+import com.muates.kafkaproducer.service.KafkaProducer;
 import com.muates.postservice.converter.SocialInteractionNotificationConverter;
 import com.muates.postservice.exception.CommentAlreadyLikedException;
-import com.muates.postservice.model.avro.SocialInteractionNotificationAvro;
 import com.muates.postservice.model.dto.request.CommentReactionRequest;
 import com.muates.postservice.model.entity.PostComment;
 import com.muates.postservice.model.entity.PostCommentLike;
-import com.muates.postservice.producer.KafkaProducer;
 import com.muates.postservice.repository.PostCommentLikeRepository;
 import com.muates.postservice.service.CommentLikeService;
 import com.muates.postservice.service.CommentService;
