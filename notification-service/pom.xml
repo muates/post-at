@@ -19,12 +19,11 @@
         <java.version>11</java.version>
         <spring-boot.version>2.3.4.RELEASE</spring-boot.version>
         <lombok.version>1.18.24</lombok.version>
-        <apache-kafka.version>2.6.2</apache-kafka.version>
-        <apache-avro.version>1.10.0</apache-avro.version>
-        <apache-avro-serializer.version>5.3.0</apache-avro-serializer.version>
         <spring-cloud-dependencies.version>Hoxton.SR9</spring-cloud-dependencies.version>
         <spring-cloud.version>2.2.8.RELEASE</spring-cloud.version>
         <maven-compiler-plugin.version>3.8.1</maven-compiler-plugin.version>
+        <kafka-project.version>1.0-SNAPSHOT</kafka-project.version>
+        <spring-messaging.version>5.2.9.RELEASE</spring-messaging.version>
     </properties>
 
     <repositories>
@@ -42,6 +41,13 @@
             <version>${spring-boot.version}</version>
         </dependency>
 
+        <!-- Spring Boot Starter WebSocket -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-websocket</artifactId>
+            <version>${spring-boot.version}</version>
+        </dependency>
+
         <!-- Lombok -->
         <dependency>
             <groupId>org.projectlombok</groupId>
@@ -49,25 +55,46 @@
             <version>${lombok.version}</version>
         </dependency>
 
+        <!-- Kafka Consumer -->
+        <dependency>
+            <groupId>com.muates</groupId>
+            <artifactId>kafka-consumer</artifactId>
+            <version>${kafka-project.version}</version>
+        </dependency>
+
+        <!-- Kafka Admin -->
+        <dependency>
+            <groupId>com.muates</groupId>
+            <artifactId>kafka-admin</artifactId>
+            <version>${kafka-project.version}</version>
+        </dependency>
+
+        <!-- Kafka Model -->
+        <dependency>
+            <groupId>com.muates</groupId>
+            <artifactId>kafka-model</artifactId>
+            <version>${kafka-project.version}</version>
+        </dependency>
+
         <!-- Spring Kafka -->
         <dependency>
             <groupId>org.springframework.kafka</groupId>
             <artifactId>spring-kafka</artifactId>
-            <version>${apache-kafka.version}</version>
-        </dependency>
-
-        <!-- Avro -->
-        <dependency>
-            <groupId>org.apache.avro</groupId>
-            <artifactId>avro</artifactId>
-            <version>${apache-avro.version}</version>
+            <version>2.6.2</version>
         </dependency>
 
         <!-- Avro Serializer -->
         <dependency>
             <groupId>io.confluent</groupId>
             <artifactId>kafka-avro-serializer</artifactId>
-            <version>${apache-avro-serializer.version}</version>
+            <version>5.3.0</version>
+        </dependency>
+
+        <!-- Spring Messaging -->
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-messaging</artifactId>
+            <version>${spring-messaging.version}</version>
         </dependency>
 
         <!-- Spring Cloud Starter Netflix Eureka Client -->
@@ -93,42 +120,10 @@
     <build>
         <plugins>
             <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <version>${maven-compiler-plugin.version}</version>
-                <configuration>
-                    <release>11</release>
-                </configuration>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.avro</groupId>
-                <artifactId>avro-maven-plugin</artifactId>
-                <version>${apache-avro.version}</version>
-                <configuration>
-                    <stringType>String</stringType>
-                </configuration>
-                <executions>
-                    <execution>
-                        <phase>generate-sources</phase>
-                        <goals>
-                            <goal>schema</goal>
-                        </goals>
-                        <configuration>
-                            <sourceDirectory>${project.basedir}/src/main/resources/avro-schemas</sourceDirectory>
-                            <outputDirectory>${project.basedir}/src/main/java/</outputDirectory>
-                        </configuration>
-                    </execution>
-                </executions>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
             </plugin>
         </plugins>
-        <pluginManagement>
-            <plugins>
-                <plugin>
-                    <groupId>org.springframework.boot</groupId>
-                    <artifactId>spring-boot-maven-plugin</artifactId>
-                </plugin>
-            </plugins>
-        </pluginManagement>
     </build>
 
 </project>
