@@ -1,5 +1,9 @@
 package com.muates.postservice.service.impl;
 
+import com.muates.kafkaconfig.config.KafkaConfigData;
+import com.muates.kafkamodel.avro.SocialInteractionNotificationAvro;
+import com.muates.kafkaproducer.service.KafkaProducer;
+import com.muates.postservice.converter.SocialInteractionNotificationConverter;
 import com.muates.postservice.exception.CommentAlreadyLikedException;
 import com.muates.postservice.model.dto.request.CommentReactionRequest;
 import com.muates.postservice.model.entity.PostComment;
@@ -18,6 +22,8 @@ public class CommentLikeServiceImpl implements CommentLikeService {
 
     private final PostCommentLikeRepository postCommentLikeRepository;
     private final CommentService commentService;
+    private final KafkaConfigData kafkaConfigData;
+    private final KafkaProducer<Long, SocialInteractionNotificationAvro> kafkaProducer;
 
     @Override
     public void reactToComment(CommentReactionRequest request) {
@@ -26,6 +32,13 @@ public class CommentLikeServiceImpl implements CommentLikeService {
                         existLike -> updateExistReaction(existLike, request.getIsLike()),
                         () -> saveNewReaction(request)
                 );
+
+        kafkaProducer.send(
+                kafkaConfigData.getTopicNamesToCreate().get(0),
+                request.getCommentOwnerId(),
+                SocialInteractionNotificationConverter
+                        .convertToAvro(request.getUserId(), request.getPostId(), "Your comment has been liked", "COMMENT_LIKE")
+        );
     }
 
     private void updateExistReaction(PostCommentLike existLike, Boolean isLike) {

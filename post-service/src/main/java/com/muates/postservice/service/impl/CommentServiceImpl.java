@@ -1,5 +1,9 @@
 package com.muates.postservice.service.impl;
 
+import com.muates.kafkaconfig.config.KafkaConfigData;
+import com.muates.kafkamodel.avro.SocialInteractionNotificationAvro;
+import com.muates.kafkaproducer.service.KafkaProducer;
+import com.muates.postservice.converter.SocialInteractionNotificationConverter;
 import com.muates.postservice.exception.CommentNotFoundException;
 import com.muates.postservice.model.dto.request.CommentRequest;
 import com.muates.postservice.model.dto.request.CommentUpdateRequest;
@@ -21,12 +25,21 @@ public class CommentServiceImpl implements CommentService {
 
     private final PostCommentRepository postCommentRepository;
     private final PostService postService;
+    private final KafkaConfigData kafkaConfigData;
+    private final KafkaProducer<Long, SocialInteractionNotificationAvro> kafkaProducer;
 
     @Override
     public void commentToPost(CommentRequest request) {
         Post existPost = postService.getPostByPostId(request.getPostId());
         PostComment postComment = convertToPostComment(request, existPost);
         postCommentRepository.save(postComment);
+
+        kafkaProducer.send(
+                kafkaConfigData.getTopicNamesToCreate().get(0),
+                request.getPostOwnerId(),
+                SocialInteractionNotificationConverter
+                        .convertToAvro(request.getUserId(), request.getPostId(), "Your post has been commented on", "POST_COMMENT")
+        );
     }
 
     @Override
