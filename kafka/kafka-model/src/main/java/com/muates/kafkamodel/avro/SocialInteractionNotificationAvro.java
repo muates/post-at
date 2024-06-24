@@ -3,7 +3,7 @@
  *
  * DO NOT EDIT DIRECTLY
  */
-package com.muates.postservice.model.avro;
+package com.muates.kafkamodel.avro;
 
 import org.apache.avro.generic.GenericArray;
 import org.apache.avro.specific.SpecificData;
@@ -14,8 +14,8 @@ import org.apache.avro.message.SchemaStore;
 
 @org.apache.avro.specific.AvroGenerated
 public class SocialInteractionNotificationAvro extends org.apache.avro.specific.SpecificRecordBase implements org.apache.avro.specific.SpecificRecord {
-  private static final long serialVersionUID = -1795805129168179112L;
-  public static final org.apache.avro.Schema SCHEMA$ = new org.apache.avro.Schema.Parser().parse("{\"type\":\"record\",\"name\":\"SocialInteractionNotificationAvro\",\"namespace\":\"com.muates.postservice.model.avro\",\"fields\":[{\"name\":\"userId\",\"type\":\"long\"},{\"name\":\"postId\",\"type\":\"long\"},{\"name\":\"message\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"}},{\"name\":\"type\",\"type\":{\"type\":\"enum\",\"name\":\"SocialInteractionType\",\"symbols\":[\"POST_LIKE\",\"POST_COMMENT\",\"COMMENT_LIKE\"]}},{\"name\":\"timestamp\",\"type\":\"long\"}]}");
+  private static final long serialVersionUID = -469238904215545028L;
+  public static final org.apache.avro.Schema SCHEMA$ = new org.apache.avro.Schema.Parser().parse("{\"type\":\"record\",\"name\":\"SocialInteractionNotificationAvro\",\"namespace\":\"com.muates.kafkamodel.avro\",\"fields\":[{\"name\":\"userId\",\"type\":\"long\"},{\"name\":\"postId\",\"type\":\"long\"},{\"name\":\"message\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"}},{\"name\":\"type\",\"type\":{\"type\":\"enum\",\"name\":\"SocialInteractionType\",\"symbols\":[\"POST_LIKE\",\"POST_COMMENT\",\"COMMENT_LIKE\"]}},{\"name\":\"timestamp\",\"type\":\"long\"}]}");
   public static org.apache.avro.Schema getClassSchema() { return SCHEMA$; }
 
   private static SpecificData MODEL$ = new SpecificData();
@@ -74,7 +74,7 @@ public class SocialInteractionNotificationAvro extends org.apache.avro.specific.
    private long userId;
    private long postId;
    private java.lang.String message;
-   private com.muates.postservice.model.avro.SocialInteractionType type;
+   private com.muates.kafkamodel.avro.SocialInteractionType type;
    private long timestamp;
 
   /**
@@ -92,7 +92,7 @@ public class SocialInteractionNotificationAvro extends org.apache.avro.specific.
    * @param type The new value for type
    * @param timestamp The new value for timestamp
    */
-  public SocialInteractionNotificationAvro(java.lang.Long userId, java.lang.Long postId, java.lang.String message, com.muates.postservice.model.avro.SocialInteractionType type, java.lang.Long timestamp) {
+  public SocialInteractionNotificationAvro(java.lang.Long userId, java.lang.Long postId, java.lang.String message, com.muates.kafkamodel.avro.SocialInteractionType type, java.lang.Long timestamp) {
     this.userId = userId;
     this.postId = postId;
     this.message = message;
@@ -121,7 +121,7 @@ public class SocialInteractionNotificationAvro extends org.apache.avro.specific.
     case 0: userId = (java.lang.Long)value$; break;
     case 1: postId = (java.lang.Long)value$; break;
     case 2: message = value$ != null ? value$.toString() : null; break;
-    case 3: type = (com.muates.postservice.model.avro.SocialInteractionType)value$; break;
+    case 3: type = (com.muates.kafkamodel.avro.SocialInteractionType)value$; break;
     case 4: timestamp = (java.lang.Long)value$; break;
     default: throw new IndexOutOfBoundsException("Invalid index: " + field$);
     }
@@ -182,7 +182,7 @@ public class SocialInteractionNotificationAvro extends org.apache.avro.specific.
    * Gets the value of the 'type' field.
    * @return The value of the 'type' field.
    */
-  public com.muates.postservice.model.avro.SocialInteractionType getType() {
+  public com.muates.kafkamodel.avro.SocialInteractionType getType() {
     return type;
   }
 
@@ -191,7 +191,7 @@ public class SocialInteractionNotificationAvro extends org.apache.avro.specific.
    * Sets the value of the 'type' field.
    * @param value the value to set.
    */
-  public void setType(com.muates.postservice.model.avro.SocialInteractionType value) {
+  public void setType(com.muates.kafkamodel.avro.SocialInteractionType value) {
     this.type = value;
   }
 
@@ -216,8 +216,8 @@ public class SocialInteractionNotificationAvro extends org.apache.avro.specific.
    * Creates a new SocialInteractionNotificationAvro RecordBuilder.
    * @return A new SocialInteractionNotificationAvro RecordBuilder
    */
-  public static com.muates.postservice.model.avro.SocialInteractionNotificationAvro.Builder newBuilder() {
-    return new com.muates.postservice.model.avro.SocialInteractionNotificationAvro.Builder();
+  public static com.muates.kafkamodel.avro.SocialInteractionNotificationAvro.Builder newBuilder() {
+    return new com.muates.kafkamodel.avro.SocialInteractionNotificationAvro.Builder();
   }
 
   /**
@@ -225,11 +225,11 @@ public class SocialInteractionNotificationAvro extends org.apache.avro.specific.
    * @param other The existing builder to copy.
    * @return A new SocialInteractionNotificationAvro RecordBuilder
    */
-  public static com.muates.postservice.model.avro.SocialInteractionNotificationAvro.Builder newBuilder(com.muates.postservice.model.avro.SocialInteractionNotificationAvro.Builder other) {
+  public static com.muates.kafkamodel.avro.SocialInteractionNotificationAvro.Builder newBuilder(com.muates.kafkamodel.avro.SocialInteractionNotificationAvro.Builder other) {
     if (other == null) {
-      return new com.muates.postservice.model.avro.SocialInteractionNotificationAvro.Builder();
+      return new com.muates.kafkamodel.avro.SocialInteractionNotificationAvro.Builder();
     } else {
-      return new com.muates.postservice.model.avro.SocialInteractionNotificationAvro.Builder(other);
+      return new com.muates.kafkamodel.avro.SocialInteractionNotificationAvro.Builder(other);
     }
   }
 
@@ -238,11 +238,11 @@ public class SocialInteractionNotificationAvro extends org.apache.avro.specific.
    * @param other The existing instance to copy.
    * @return A new SocialInteractionNotificationAvro RecordBuilder
    */
-  public static com.muates.postservice.model.avro.SocialInteractionNotificationAvro.Builder newBuilder(com.muates.postservice.model.avro.SocialInteractionNotificationAvro other) {
+  public static com.muates.kafkamodel.avro.SocialInteractionNotificationAvro.Builder newBuilder(com.muates.kafkamodel.avro.SocialInteractionNotificationAvro other) {
     if (other == null) {
-      return new com.muates.postservice.model.avro.SocialInteractionNotificationAvro.Builder();
+      return new com.muates.kafkamodel.avro.SocialInteractionNotificationAvro.Builder();
     } else {
-      return new com.muates.postservice.model.avro.SocialInteractionNotificationAvro.Builder(other);
+      return new com.muates.kafkamodel.avro.SocialInteractionNotificationAvro.Builder(other);
     }
   }
 
@@ -256,7 +256,7 @@ public class SocialInteractionNotificationAvro extends org.apache.avro.specific.
     private long userId;
     private long postId;
     private java.lang.String message;
-    private com.muates.postservice.model.avro.SocialInteractionType type;
+    private com.muates.kafkamodel.avro.SocialInteractionType type;
     private long timestamp;
 
     /** Creates a new Builder */
@@ -268,7 +268,7 @@ public class SocialInteractionNotificationAvro extends org.apache.avro.specific.
      * Creates a Builder by copying an existing Builder.
      * @param other The existing Builder to copy.
      */
-    private Builder(com.muates.postservice.model.avro.SocialInteractionNotificationAvro.Builder other) {
+    private Builder(com.muates.kafkamodel.avro.SocialInteractionNotificationAvro.Builder other) {
       super(other);
       if (isValidValue(fields()[0], other.userId)) {
         this.userId = data().deepCopy(fields()[0].schema(), other.userId);
@@ -296,7 +296,7 @@ public class SocialInteractionNotificationAvro extends org.apache.avro.specific.
      * Creates a Builder by copying an existing SocialInteractionNotificationAvro instance
      * @param other The existing instance to copy.
      */
-    private Builder(com.muates.postservice.model.avro.SocialInteractionNotificationAvro other) {
+    private Builder(com.muates.kafkamodel.avro.SocialInteractionNotificationAvro other) {
       super(SCHEMA$);
       if (isValidValue(fields()[0], other.userId)) {
         this.userId = data().deepCopy(fields()[0].schema(), other.userId);
@@ -334,7 +334,7 @@ public class SocialInteractionNotificationAvro extends org.apache.avro.specific.
       * @param value The value of 'userId'.
       * @return This builder.
       */
-    public com.muates.postservice.model.avro.SocialInteractionNotificationAvro.Builder setUserId(long value) {
+    public com.muates.kafkamodel.avro.SocialInteractionNotificationAvro.Builder setUserId(long value) {
       validate(fields()[0], value);
       this.userId = value;
       fieldSetFlags()[0] = true;
@@ -354,7 +354,7 @@ public class SocialInteractionNotificationAvro extends org.apache.avro.specific.
       * Clears the value of the 'userId' field.
       * @return This builder.
       */
-    public com.muates.postservice.model.avro.SocialInteractionNotificationAvro.Builder clearUserId() {
+    public com.muates.kafkamodel.avro.SocialInteractionNotificationAvro.Builder clearUserId() {
       fieldSetFlags()[0] = false;
       return this;
     }
@@ -373,7 +373,7 @@ public class SocialInteractionNotificationAvro extends org.apache.avro.specific.
       * @param value The value of 'postId'.
       * @return This builder.
       */
-    public com.muates.postservice.model.avro.SocialInteractionNotificationAvro.Builder setPostId(long value) {
+    public com.muates.kafkamodel.avro.SocialInteractionNotificationAvro.Builder setPostId(long value) {
       validate(fields()[1], value);
       this.postId = value;
       fieldSetFlags()[1] = true;
@@ -393,7 +393,7 @@ public class SocialInteractionNotificationAvro extends org.apache.avro.specific.
       * Clears the value of the 'postId' field.
       * @return This builder.
       */
-    public com.muates.postservice.model.avro.SocialInteractionNotificationAvro.Builder clearPostId() {
+    public com.muates.kafkamodel.avro.SocialInteractionNotificationAvro.Builder clearPostId() {
       fieldSetFlags()[1] = false;
       return this;
     }
@@ -412,7 +412,7 @@ public class SocialInteractionNotificationAvro extends org.apache.avro.specific.
       * @param value The value of 'message'.
       * @return This builder.
       */
-    public com.muates.postservice.model.avro.SocialInteractionNotificationAvro.Builder setMessage(java.lang.String value) {
+    public com.muates.kafkamodel.avro.SocialInteractionNotificationAvro.Builder setMessage(java.lang.String value) {
       validate(fields()[2], value);
       this.message = value;
       fieldSetFlags()[2] = true;
@@ -432,7 +432,7 @@ public class SocialInteractionNotificationAvro extends org.apache.avro.specific.
       * Clears the value of the 'message' field.
       * @return This builder.
       */
-    public com.muates.postservice.model.avro.SocialInteractionNotificationAvro.Builder clearMessage() {
+    public com.muates.kafkamodel.avro.SocialInteractionNotificationAvro.Builder clearMessage() {
       message = null;
       fieldSetFlags()[2] = false;
       return this;
@@ -442,7 +442,7 @@ public class SocialInteractionNotificationAvro extends org.apache.avro.specific.
       * Gets the value of the 'type' field.
       * @return The value.
       */
-    public com.muates.postservice.model.avro.SocialInteractionType getType() {
+    public com.muates.kafkamodel.avro.SocialInteractionType getType() {
       return type;
     }
 
@@ -452,7 +452,7 @@ public class SocialInteractionNotificationAvro extends org.apache.avro.specific.
       * @param value The value of 'type'.
       * @return This builder.
       */
-    public com.muates.postservice.model.avro.SocialInteractionNotificationAvro.Builder setType(com.muates.postservice.model.avro.SocialInteractionType value) {
+    public com.muates.kafkamodel.avro.SocialInteractionNotificationAvro.Builder setType(com.muates.kafkamodel.avro.SocialInteractionType value) {
       validate(fields()[3], value);
       this.type = value;
       fieldSetFlags()[3] = true;
@@ -472,7 +472,7 @@ public class SocialInteractionNotificationAvro extends org.apache.avro.specific.
       * Clears the value of the 'type' field.
       * @return This builder.
       */
-    public com.muates.postservice.model.avro.SocialInteractionNotificationAvro.Builder clearType() {
+    public com.muates.kafkamodel.avro.SocialInteractionNotificationAvro.Builder clearType() {
       type = null;
       fieldSetFlags()[3] = false;
       return this;
@@ -492,7 +492,7 @@ public class SocialInteractionNotificationAvro extends org.apache.avro.specific.
       * @param value The value of 'timestamp'.
       * @return This builder.
       */
-    public com.muates.postservice.model.avro.SocialInteractionNotificationAvro.Builder setTimestamp(long value) {
+    public com.muates.kafkamodel.avro.SocialInteractionNotificationAvro.Builder setTimestamp(long value) {
       validate(fields()[4], value);
       this.timestamp = value;
       fieldSetFlags()[4] = true;
@@ -512,7 +512,7 @@ public class SocialInteractionNotificationAvro extends org.apache.avro.specific.
       * Clears the value of the 'timestamp' field.
       * @return This builder.
       */
-    public com.muates.postservice.model.avro.SocialInteractionNotificationAvro.Builder clearTimestamp() {
+    public com.muates.kafkamodel.avro.SocialInteractionNotificationAvro.Builder clearTimestamp() {
       fieldSetFlags()[4] = false;
       return this;
     }
@@ -525,7 +525,7 @@ public class SocialInteractionNotificationAvro extends org.apache.avro.specific.
         record.userId = fieldSetFlags()[0] ? this.userId : (java.lang.Long) defaultValue(fields()[0]);
         record.postId = fieldSetFlags()[1] ? this.postId : (java.lang.Long) defaultValue(fields()[1]);
         record.message = fieldSetFlags()[2] ? this.message : (java.lang.String) defaultValue(fields()[2]);
-        record.type = fieldSetFlags()[3] ? this.type : (com.muates.postservice.model.avro.SocialInteractionType) defaultValue(fields()[3]);
+        record.type = fieldSetFlags()[3] ? this.type : (com.muates.kafkamodel.avro.SocialInteractionType) defaultValue(fields()[3]);
         record.timestamp = fieldSetFlags()[4] ? this.timestamp : (java.lang.Long) defaultValue(fields()[4]);
         return record;
       } catch (org.apache.avro.AvroMissingFieldException e) {
@@ -582,7 +582,7 @@ public class SocialInteractionNotificationAvro extends org.apache.avro.specific.
 
       this.message = in.readString();
 
-      this.type = com.muates.postservice.model.avro.SocialInteractionType.values()[in.readEnum()];
+      this.type = com.muates.kafkamodel.avro.SocialInteractionType.values()[in.readEnum()];
 
       this.timestamp = in.readLong();
 
@@ -602,7 +602,7 @@ public class SocialInteractionNotificationAvro extends org.apache.avro.specific.
           break;
 
         case 3:
-          this.type = com.muates.postservice.model.avro.SocialInteractionType.values()[in.readEnum()];
+          this.type = com.muates.kafkamodel.avro.SocialInteractionType.values()[in.readEnum()];
           break;
 
         case 4:
