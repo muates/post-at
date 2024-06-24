@@ -1,7 +1,7 @@
 package com.muates.postservice.converter;
 
-import com.muates.postservice.model.avro.SocialInteractionNotificationAvro;
-import com.muates.postservice.model.avro.SocialInteractionType;
+import com.muates.kafkamodel.avro.SocialInteractionNotificationAvro;
+import com.muates.kafkamodel.avro.SocialInteractionType;
 
 public class SocialInteractionNotificationConverter {
 
