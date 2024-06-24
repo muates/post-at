@@ -1,7 +1,5 @@
 package com.muates.notificationservice.consumer.impl;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.type.TypeFactory;
 import com.muates.kafkaconfig.config.KafkaConfigData;
 import com.muates.kafkaconfig.config.KafkaConsumerConfigData;
 import com.muates.kafkamodel.avro.SocialInteractionNotificationAvro;
@@ -59,9 +57,6 @@ public class SocialInteractionNotificationConsumer implements KafkaConsumer<Long
             @Header(KafkaHeaders.RECEIVED_PARTITION_ID) List<Integer> partitions,
             @Header(KafkaHeaders.OFFSET) List<Long> offsets
     ) {
-        ObjectMapper objectMapper = new ObjectMapper();
-        objectMapper.setTypeFactory(TypeFactory.defaultInstance().withClassLoader(Thread.currentThread().getContextClassLoader()));
-
         LOGGER.info("Received Kafka Message - Messages: {}, Keys: {}, Partitions: {}, Offsets: {}",
                 messages.size(),
                 keys.toString(),
