@@ -1,21 +1,49 @@
 package com.muates.identityservice.service.impl;
 
+import com.muates.identityservice.model.dto.request.LoginRequest;
 import com.muates.identityservice.service.AuthService;
 import com.muates.identityservice.service.JwtService;
 import com.muates.identityservice.service.RolePermissionService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 @Service
 public class AuthServiceImpl implements AuthService {
 
+    private final AuthenticationManager authenticationManager;
     private final JwtService jwtService;
     private final RolePermissionService rolePermissionService;
+
+    @Override
+    public String authenticateUser(LoginRequest request) {
+        Authentication authentication = authenticationManager.authenticate(
+                new UsernamePasswordAuthenticationToken(
+                        request.getUsername(),
+                        request.getPassword()
+                )
+        );
+
+        SecurityContextHolder.getContext().setAuthentication(authentication);
+
+        return jwtService.generateToken(
+                authentication.getName(),
+                authentication.getAuthorities()
+                        .stream()
+                        .map(GrantedAuthority::getAuthority)
+                        .collect(Collectors.toList())
+        );
+    }
 
     @Override
     public ResponseEntity<String> validate(String url, String token) {
