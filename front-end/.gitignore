@@ -39,7 +39,7 @@ testem.log
 .DS_Store
 Thumbs.db
 
-# Compiled output #
+# Compiled output
 *.js
 *.jsx
 *.ts
@@ -52,8 +52,8 @@ logs
 *.log
 npm-debug.log*
 
-# Optional npm cache directory #
+# Optional npm cache directory
 .npm
 
-# Optional eslint cache #
+# Optional eslint cache
 .eslintcache
