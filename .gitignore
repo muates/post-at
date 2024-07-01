@@ -38,3 +38,41 @@ out/
 **/.DS_Store
 
 target/
+
+### Angular ###
+node_modules/
+dist/
+tmp/
+out-tsc/
+
+### Compiled output ###
+*.js
+*.jsx
+*.ts
+*.tsx
+*.js.map
+*.d.ts
+
+### Logs ###
+logs
+*.log
+npm-debug.log*
+
+### System files ###
+.DS_Store
+Thumbs.db
+
+### IDEs and editors ###
+.idea/
+.project
+.classpath
+.c9/
+*.launch
+.settings/
+*.sublime-workspace
+
+### Optional npm cache directory ###
+.npm
+
+### Optional eslint cache ###
+.eslintcache
