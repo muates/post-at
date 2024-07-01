@@ -1,5 +1,3 @@
-# See http://help.github.com/ignore-files/ for more about ignoring files.
-
 # Compiled output
 /dist
 /tmp
@@ -40,3 +38,22 @@ testem.log
 # System files
 .DS_Store
 Thumbs.db
+
+# Compiled output #
+*.js
+*.jsx
+*.ts
+*.tsx
+*.js.map
+*.d.ts
+
+### Logs ###
+logs
+*.log
+npm-debug.log*
+
+# Optional npm cache directory #
+.npm
+
+# Optional eslint cache #
+.eslintcache
