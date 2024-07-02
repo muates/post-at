@@ -42,8 +42,6 @@ Thumbs.db
 # Compiled output
 *.js
 *.jsx
-*.ts
-*.tsx
 *.js.map
 *.d.ts
 
