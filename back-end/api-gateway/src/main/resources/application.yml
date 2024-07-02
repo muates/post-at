@@ -9,6 +9,9 @@ spring:
     name: gateway-service
   cloud:
     gateway:
+      globalcors:
+        add-to-simple-url-handler-mapping: true
+
       routes:
         - id: identity-service
           uri: lb://identity-service
