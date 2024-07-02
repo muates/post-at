@@ -1,0 +1,44 @@
+<style>
+  .card {
+    width: 400px;
+    height: 300px;
+    padding: 0;
+  }
+
+  .btn {
+    display: block;
+    margin: 15px auto 0 auto;
+  }
+
+  .form-group {
+    margin: 15px auto 0 auto;
+    width: 90%;
+  }
+
+  .card-body {
+    padding: 0;
+  }
+</style>
+
+<div class="container-fluid d-flex align-items-center justify-content-center" style="height: 100vh;">
+  <div class="row justify-content-center">
+    <div class="card">
+      <div class="card-header">
+        <h2 class="text-center">Login</h2>
+      </div>
+      <div class="card-body">
+        <form (ngSubmit)="login()">
+          <div class="form-group">
+            <label for="username">Username</label>
+            <input id="username" type="text" class="form-control" [(ngModel)]="loginRequest.username" name="username" required>
+          </div>
+          <div class="form-group">
+            <label for="password">Password</label>
+            <input id="password" type="password" class="form-control" [(ngModel)]="loginRequest.password" name="password" required>
+          </div>
+          <button type="submit" class="btn btn-primary">Login</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
