@@ -1,5 +1,6 @@
 package com.muates.identityservice.controller;
 
+import com.muates.identityservice.model.dto.request.RegisterRequest;
 import com.muates.identityservice.model.entity.User;
 import com.muates.identityservice.service.UserService;
 import lombok.RequiredArgsConstructor;
@@ -16,8 +17,8 @@ public class UserController {
     private final UserService userService;
 
     @PostMapping("/register")
-    public ResponseEntity<User> registerUser(@RequestBody User user) {
-        User savedUser = userService.saveUser(user);
+    public ResponseEntity<User> registerUser(@RequestBody RegisterRequest request) {
+        User savedUser = userService.saveUser(request);
         return ResponseEntity.ok(savedUser);
     }
 
