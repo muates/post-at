@@ -12,6 +12,8 @@ export class LoginComponent implements OnInit {
 
   loginRequest: LoginRequest = new LoginRequest(); 
 
+  showRegister = false;
+
   constructor(
     private authService: AuthService,
     private router: Router
@@ -23,7 +25,7 @@ export class LoginComponent implements OnInit {
   login() {
     this.authService.login(this.loginRequest).subscribe({
       next: () => {
-        this.router.navigate(['/dashboard']);
+        this.router.navigate(['/main']);
       },
       error: (err) => {
         console.error(err);

@@ -20,10 +20,14 @@
           </div>
           <div class="register-area">
             <span>Don't have an account?</span>
-            <a href="#">Register</a>
+            <button type="button" (click)="showRegister = !showRegister" class="btn btn-link p-0 m-0">Register</button>
           </div>
         </form>
       </div>
     </div>
   </div>
+</div>
+
+<div *ngIf="showRegister" class="register-dialog">
+  <app-register (closeRegister)="showRegister = false"></app-register>
 </div>
