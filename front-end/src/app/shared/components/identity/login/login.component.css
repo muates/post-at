@@ -1,0 +1,58 @@
+.container-fluid {
+    background-image: linear-gradient(rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0.2)), url('/assets/images/bg-1.jpg');
+    background-position: center;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.card {
+    width: 400px;
+    height: auto;
+    padding: 0;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.6);
+
+    .form-group {
+        margin: 15px auto 0 auto;
+        width: 90%;
+    }
+
+    .card-body {
+        padding: 0;
+
+        .form-group {
+            margin: 15px auto 0 auto;
+            width: 90%;
+        }
+
+        .login-forget-area {
+            display: flex;
+            margin: 15px auto 0 auto;
+            width: 90%;
+            flex-direction: column;
+            align-items: center;
+
+            button {
+                width: 100%;
+            }
+
+            a {
+                line-height: 38px;
+                font-size: 12px;
+            }
+        }
+
+        .register-area {
+            display: flex;
+            justify-content: center;
+            margin: 0 auto 15px auto;
+            width: 90%;
+            font-size: 12px;
+
+            a {
+                margin-left: 10px;
+            }
+        }
+    }
+}
