@@ -34,6 +34,15 @@ public class PostController {
         return ResponseEntity.ok(response);
     }
 
+    @GetMapping("/posts")
+    public ResponseEntity<Page<PostResponse>> getPosts(
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size
+    ) {
+        Page<PostResponse> response = postService.getPosts(page, size);
+        return ResponseEntity.ok(response);
+    }
+
     @PutMapping("/update/{postId}")
     public ResponseEntity<PostResponse> updatePost(
             @PathVariable Long postId,

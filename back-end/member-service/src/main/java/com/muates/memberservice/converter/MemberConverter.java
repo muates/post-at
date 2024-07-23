@@ -2,12 +2,14 @@ package com.muates.memberservice.converter;
 
 import com.muates.memberservice.model.dto.request.MemberCreateRequest;
 import com.muates.memberservice.model.dto.request.MemberUpdateRequest;
+import com.muates.memberservice.model.dto.response.CommentMemberInfoResponse;
+import com.muates.memberservice.model.dto.response.PostMemberInfoResponse;
 import com.muates.memberservice.model.dto.response.MemberResponse;
 import com.muates.memberservice.model.entity.Member;
 
-import java.util.Date;
-import java.util.Optional;
+import java.util.*;
 import java.util.function.Consumer;
+import java.util.stream.Collectors;
 
 public class MemberConverter {
 
@@ -65,6 +67,32 @@ public class MemberConverter {
                 .createdDate(member.getCreatedDate())
                 .updatedDate(member.getUpdatedDate())
                 .build();
+    }
+
+    public static List<PostMemberInfoResponse> convertMemberToPostInfoResponse(Map<Member, List<Member>> memberMap) {
+        if (memberMap == null) {
+            return null;
+        }
+
+        return memberMap.entrySet().stream().map(entry -> {
+            Member postMember = entry.getKey();
+            List<Member> commentMembers = entry.getValue();
+
+            List<CommentMemberInfoResponse> commentMemberInfoResponse = commentMembers.stream().map(commentMember ->
+                    CommentMemberInfoResponse.builder()
+                            .userId(commentMember.getId())
+                            .username(commentMember.getUsername())
+                            .profilePicture(commentMember.getProfileImageUrl())
+                            .build()
+            ).collect(Collectors.toList());
+
+            return PostMemberInfoResponse.builder()
+                    .userId(postMember.getId())
+                    .username(postMember.getUsername())
+                    .profilePicture(postMember.getProfileImageUrl())
+                    .commentInfos(commentMemberInfoResponse)
+                    .build();
+        }).collect(Collectors.toList());
     }
 
     private static <T> void updateField(T target, Consumer<T> updater) {

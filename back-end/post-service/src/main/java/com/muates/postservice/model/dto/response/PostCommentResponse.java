@@ -20,4 +20,6 @@ public class PostCommentResponse {
     private Date createdDate;
     private Date updatedDate;
     private List<PostCommentLikeResponse> likes;
+    private String username;
+    private String profilePicture;
 }

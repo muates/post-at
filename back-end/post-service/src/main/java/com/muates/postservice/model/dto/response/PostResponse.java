@@ -22,4 +22,6 @@ public class PostResponse {
     private List<PostMediaResponse> media;
     private List<PostLikeResponse> likes;
     private List<PostCommentResponse> comments;
+    private String username;
+    private String profilePicture;
 }
