@@ -1,0 +1,10 @@
+<div class="sidebar bg-light">
+  <button class="btn btn-primary btn-block mb-2 d-flex align-items-center gap-2"
+    [class.active]="currentRoute === '/main/home'" (click)="navigateTo('/main/home')">
+    <i class="fas fa-home"></i> Home
+  </button>
+  <button class="btn btn-primary btn-block mb-2 d-flex align-items-center gap-2"
+    [class.active]="currentRoute === '/main/profile'" (click)="navigateTo('/main/profile')">
+    <i class="fas fa-user"></i> Profile
+  </button>
+</div>

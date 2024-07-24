@@ -16,6 +16,7 @@ import { ProfileComponent } from './shared/components/main/pages/profile/profile
 import { HomeComponent } from './shared/components/main/pages/home/home.component';
 import { PostComponent } from './shared/components/main/pages/home/post/post.component';
 import { AddCommentComponent } from './shared/components/main/pages/home/add-comment/add-comment.component';
+import { PostListComponent } from './shared/components/main/pages/home/post-list/post-list.component';
 
 @NgModule({
   declarations: [
@@ -28,7 +29,8 @@ import { AddCommentComponent } from './shared/components/main/pages/home/add-com
     ProfileComponent,
     HomeComponent,
     PostComponent,
-    AddCommentComponent
+    AddCommentComponent,
+    PostListComponent
   ],
   imports: [
     BrowserModule,
