@@ -11,39 +11,27 @@ public class FeignClientExceptionHandler {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(FeignClientExceptionHandler.class);
 
-    public <T> T handleFeignException(FeignException e, Class<T> returnType) {
+    public void handleFeignException(FeignException e) {
         HttpStatus status = HttpStatus.valueOf(e.status());
 
         if (status.is4xxClientError()) {
-            return handleClientError(e, returnType);
+            handleClientError(e);
         } else if (status.is5xxServerError()) {
-            return handleServerError(e, returnType);
+            handleServerError(e);
         } else {
-            return handleUnexpectedError(e, returnType);
+            handleUnexpectedError(e);
         }
     }
 
-    private <T> T handleClientError(FeignException e, Class<T> returnType) {
+    private void handleClientError(FeignException e) {
         LOGGER.error("Client error occurred (status {}): {}", e.status(), e.getMessage());
-        return createEmptyInstance(returnType);
     }
 
-    private <T> T handleServerError(FeignException e, Class<T> returnType) {
+    private void handleServerError(FeignException e) {
         LOGGER.error("Server error occurred (status {}): {}", e.status(), e.getMessage());
-        return createEmptyInstance(returnType);
     }
 
-    private <T> T handleUnexpectedError(FeignException e, Class<T> returnType) {
+    private void handleUnexpectedError(FeignException e) {
         LOGGER.error("Unexpected error occurred: {}", e.getMessage());
-        return createEmptyInstance(returnType);
-    }
-
-    private <T> T createEmptyInstance(Class<T> returnType) {
-        try {
-            return returnType.getDeclaredConstructor().newInstance();
-        } catch (Exception ex) {
-            LOGGER.error("Failed to create empty instance", ex);
-            throw new RuntimeException("Failed to create empty instance", ex);
-        }
     }
 }
