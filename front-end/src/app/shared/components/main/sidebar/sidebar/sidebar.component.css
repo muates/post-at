@@ -1,7 +1,10 @@
 .sidebar {
-    height: 100vh;
+    height: auto;
     padding: 10px;
-    border-right: 1px solid #ddd;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    margin-top: 16px;
 
     .btn {
         display: flex;
@@ -10,6 +13,11 @@
         width: 100%;
         border-radius: 5px;
         transition: transform 0.2s;
+        margin-bottom: 12px;
+    }
+
+    .btn:last-child {
+        margin-bottom: 0;
     }
 
     .btn:hover {
@@ -21,6 +29,7 @@
     }
 
     .active {
-        background-color: #003d97;
+        background-color: #f0f0f0;
+        color: #003d97;
     }
 }

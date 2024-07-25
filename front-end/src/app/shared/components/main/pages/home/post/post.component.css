@@ -3,7 +3,7 @@
     border-radius: 8px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     background-color: #fff;
-    margin: 16px;
+    margin: 16px auto 16px auto;
     padding: 16px;
     max-width: 600px;
 }
@@ -44,21 +44,17 @@
 
 .carousel-item {
     display: none;
-    /* Hide all items by default */
 }
 
 .carousel-item.active {
     display: block;
-    /* Show the active item */
 }
 
 .carousel-item img,
 .carousel-item video {
     width: 100%;
     height: 400px;
-    /* Sabit yükseklik */
     object-fit: cover;
-    /* İçeriği kapsayacak şekilde kırp */
     border-radius: 8px;
 }
 
@@ -74,9 +70,7 @@
     cursor: pointer;
     z-index: 1;
     width: 40px;
-    /* Sabit genişlik */
     height: 40px;
-    /* Sabit yükseklik */
     border-radius: 50%;
     display: flex;
     align-items: center;
