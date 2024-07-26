@@ -25,4 +25,19 @@ public class PostCommentConverter {
                         .build())
                 .collect(Collectors.toList());
     }
+
+    public static PostCommentResponse convertPostCommentToResponse(PostComment postComment) {
+        if (postComment == null) {
+            return null;
+        }
+
+        return PostCommentResponse.builder()
+                .id(postComment.getId())
+                .userId(postComment.getUserId())
+                .content(postComment.getContent())
+                .createdDate(postComment.getCreatedDate())
+                .updatedDate(postComment.getUpdatedDate())
+                .likes(PostCommentLikeConverter.convertPostCommentLikeToResponse(postComment.getLikes()))
+                .build();
+    }
 }

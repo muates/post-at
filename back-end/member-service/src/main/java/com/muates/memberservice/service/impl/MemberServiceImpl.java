@@ -2,6 +2,7 @@ package com.muates.memberservice.service.impl;
 
 import com.muates.memberservice.converter.MemberConverter;
 import com.muates.memberservice.exception.MemberNotFoundException;
+import com.muates.memberservice.model.dto.request.CommentInfoRequest;
 import com.muates.memberservice.model.dto.request.MemberCreateRequest;
 import com.muates.memberservice.model.dto.request.MemberUpdateRequest;
 import com.muates.memberservice.model.dto.request.PostWithCommentInfoRequest;
@@ -59,5 +60,10 @@ public class MemberServiceImpl implements MemberService {
         }
 
         return memberMap;
+    }
+
+    @Override
+    public List<Member> findMembers(CommentInfoRequest request) {
+        return memberRepository.findAllById(request.getUserIds());
     }
 }

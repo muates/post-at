@@ -1,9 +1,11 @@
 package com.muates.memberservice.controller;
 
 import com.muates.memberservice.converter.MemberConverter;
+import com.muates.memberservice.model.dto.request.CommentInfoRequest;
 import com.muates.memberservice.model.dto.request.MemberCreateRequest;
 import com.muates.memberservice.model.dto.request.MemberUpdateRequest;
 import com.muates.memberservice.model.dto.request.PostWithCommentInfoRequest;
+import com.muates.memberservice.model.dto.response.CommentMemberInfoResponse;
 import com.muates.memberservice.model.dto.response.PostMemberInfoResponse;
 import com.muates.memberservice.model.dto.response.MemberResponse;
 import com.muates.memberservice.service.MemberService;
@@ -36,6 +38,12 @@ public class MemberController {
     @PostMapping("/member-info-for-post")
     public ResponseEntity<List<PostMemberInfoResponse>> getMemberInfoForPost(@RequestBody List<PostWithCommentInfoRequest> request) {
         List<PostMemberInfoResponse> response = MemberConverter.convertMemberToPostInfoResponse(memberService.findMembers(request));
+        return ResponseEntity.ok(response);
+    }
+
+    @PostMapping("/member-info-for-comment")
+    public ResponseEntity<List<CommentMemberInfoResponse>> getMemberInfoForComment(@RequestBody CommentInfoRequest request) {
+        List<CommentMemberInfoResponse> response = MemberConverter.convertMemberToCommentInfoResponse(memberService.findMembers(request));
         return ResponseEntity.ok(response);
     }
 }

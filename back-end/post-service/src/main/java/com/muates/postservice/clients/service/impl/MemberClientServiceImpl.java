@@ -1,6 +1,8 @@
 package com.muates.postservice.clients.service.impl;
 
 import com.muates.postservice.clients.MemberFeignClient;
+import com.muates.postservice.clients.model.request.CommentInfoRequest;
+import com.muates.postservice.clients.model.response.CommentMemberInfoResponse;
 import com.muates.postservice.clients.service.MemberClientService;
 import com.muates.postservice.exception.FeignClientExceptionHandler;
 import com.muates.postservice.clients.model.request.PostWithCommentInfoRequest;
@@ -30,38 +32,55 @@ public class MemberClientServiceImpl implements MemberClientService {
 
     @Override
     public List<PostMemberInfoResponse> getMemberInfoForPosts(List<PostWithCommentInfoRequest> requests) {
-        Supplier<List<PostMemberInfoResponse>> supplier = createSupplier(requests);
-        Function<Throwable, List<PostMemberInfoResponse>> fallback = createFallback();
-        return executeWithCircuitBreaker(supplier, fallback);
+        return executeWithCircuitBreaker(
+                () -> fetchMemberInfoForPosts(requests),
+                this::handleFallback
+        );
     }
 
-    private Supplier<List<PostMemberInfoResponse>> createSupplier(List<PostWithCommentInfoRequest> requests) {
-        return () -> {
-            try {
-                ResponseEntity<List<PostMemberInfoResponse>> responseEntity = memberFeignClient.getMemberInfoForPost(requests);
-                if (responseEntity.getStatusCode().is2xxSuccessful()) {
-                    return responseEntity.getBody();
-                } else {
-                    throw new RuntimeException("Unexpected response status: " + responseEntity.getStatusCode());
-                }
-            } catch (FeignException e) {
-                exceptionHandler.handleFeignException(e);
-                return Collections.emptyList();
+    @Override
+    public List<CommentMemberInfoResponse> getMemberInfoForComments(CommentInfoRequest request) {
+        return executeWithCircuitBreaker(
+                () -> fetchMemberInfoForComments(request),
+                this::handleFallback
+        );
+    }
+
+    private List<PostMemberInfoResponse> fetchMemberInfoForPosts(List<PostWithCommentInfoRequest> requests) {
+        try {
+            ResponseEntity<List<PostMemberInfoResponse>> responseEntity = memberFeignClient.getMemberInfoForPost(requests);
+            if (responseEntity.getStatusCode().is2xxSuccessful()) {
+                return responseEntity.getBody();
+            } else {
+                throw new RuntimeException("Unexpected response status: " + responseEntity.getStatusCode());
             }
-        };
-    }
-
-    private Function<Throwable, List<PostMemberInfoResponse>> createFallback() {
-        return throwable -> {
-            LOGGER.error("Fallback method called due to: {}", throwable.getMessage());
+        } catch (FeignException e) {
+            exceptionHandler.handleFeignException(e);
             return Collections.emptyList();
-        };
+        }
     }
 
-    private List<PostMemberInfoResponse> executeWithCircuitBreaker(
-            Supplier<List<PostMemberInfoResponse>> supplier,
-            Function<Throwable, List<PostMemberInfoResponse>> fallback) {
-        Supplier<List<PostMemberInfoResponse>> decoratedSupplier = CircuitBreaker.decorateSupplier(memberServiceCircuitBreaker, supplier);
+    private List<CommentMemberInfoResponse> fetchMemberInfoForComments(CommentInfoRequest request) {
+        try {
+            ResponseEntity<List<CommentMemberInfoResponse>> responseEntity = memberFeignClient.getMemberInfoForComment(request);
+            if (responseEntity.getStatusCode().is2xxSuccessful()) {
+                return responseEntity.getBody();
+            } else {
+                throw new RuntimeException("Unexpected response status: " + responseEntity.getStatusCode());
+            }
+        } catch (FeignException e) {
+            exceptionHandler.handleFeignException(e);
+            return Collections.emptyList();
+        }
+    }
+
+    private <T> List<T> handleFallback(Throwable throwable) {
+        LOGGER.error("Fallback method called due to: {}", throwable.getMessage());
+        return Collections.emptyList();
+    }
+
+    private <T> T executeWithCircuitBreaker(Supplier<T> supplier, Function<Throwable, T> fallback) {
+        Supplier<T> decoratedSupplier = CircuitBreaker.decorateSupplier(memberServiceCircuitBreaker, supplier);
         try {
             return decoratedSupplier.get();
         } catch (Exception e) {

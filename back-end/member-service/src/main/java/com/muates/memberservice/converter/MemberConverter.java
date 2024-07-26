@@ -95,6 +95,18 @@ public class MemberConverter {
         }).collect(Collectors.toList());
     }
 
+    public static List<CommentMemberInfoResponse> convertMemberToCommentInfoResponse(List<Member> memberList) {
+        if (memberList.isEmpty()) {
+            return Collections.emptyList();
+        }
+
+        return memberList.stream().map(member -> CommentMemberInfoResponse.builder()
+                .userId(member.getId())
+                .username(member.getUsername())
+                .profilePicture(member.getProfileImageUrl())
+                .build()).collect(Collectors.toList());
+    }
+
     private static <T> void updateField(T target, Consumer<T> updater) {
         Optional.ofNullable(target).ifPresent(updater);
     }
