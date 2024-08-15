@@ -1,4 +1,3 @@
-import { PostCommentResponse } from "./post-comment-response";
 import { PostLikeResponse } from "./post-like-response";
 import { PostMediaResponse } from "./post-media-response";
 
@@ -10,7 +9,7 @@ export class PostResponse {
     updatedDate!: Date;
     media!: PostMediaResponse[];
     likes!: PostLikeResponse[];
-    comments!: PostCommentResponse[];
+    commentCount!: number;
     username!: string;
     profilePicture!: string;
 }

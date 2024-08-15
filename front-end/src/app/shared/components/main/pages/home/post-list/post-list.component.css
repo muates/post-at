@@ -1,0 +1,22 @@
+.post-list {
+    max-height: calc(100vh - 100px);
+    overflow-y: auto;
+}
+
+.post-list::-webkit-scrollbar {
+    display: none;
+}
+
+.post-list {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+}
+
+.loading-spinner {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    font-size: 18px;
+    color: #555;
+}

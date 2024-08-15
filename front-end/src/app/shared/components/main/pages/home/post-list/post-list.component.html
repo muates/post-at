@@ -1,8 +1,9 @@
 <div class="post-list">
-    <app-post *ngFor="let post of posts" [post]="post"></app-post>
+    <div *ngFor="let post of posts" class="post-card">
+        <app-post [post]="post"></app-post>
+    </div>
 </div>
 
-<div class="pagination-controls">
-    <button (click)="previousPage()" [disabled]="currentPage === 0">Previous</button>
-    <button (click)="nextPage()" [disabled]="currentPage >= totalPages - 1">Next</button>
+<div *ngIf="isLoading" class="loading-spinner">
+    <span>Loading...</span>
 </div>

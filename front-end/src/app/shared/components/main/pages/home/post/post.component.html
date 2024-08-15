@@ -35,14 +35,35 @@
         </button>
         <button (click)="toggleComments()">
             <i class="fas fa-comment"></i>
-            {{ post.comments.length }} Comments
+            {{ post.commentCount }} Comments
         </button>
     </div>
+
     <div class="comments-section" *ngIf="showComments">
-        <div *ngFor="let comment of post.comments" class="comment">
-            <strong>{{ comment.username }}</strong>
-            <p>{{ comment.content }}</p>
+        <div class="comments-list">
+            <div *ngFor="let comment of comments" class="comment">
+                <div class="comment-header">
+                    <img [src]="comment.profilePicture || defaultProfilePicture" alt="Profile Picture"
+                        class="comment-profile-img">
+                    <div class="comment-user-info">
+                        <strong>{{ comment.username }}</strong>
+                        <small>{{ comment.createdDate | date:'short' }}</small>
+                    </div>
+                </div>
+                <p class="comment-content">{{ comment.content }}</p>
+                <div class="comment-footer">
+                    <button (click)="toggleLike()">
+                        <i [ngClass]="{'fas fa-heart': isLiked, 'far fa-heart': !isLiked}"></i>
+                        {{ comment.likes.length }} Likes
+                    </button>
+                </div>
+            </div>
+            <div *ngIf="isLoadingComments" class="loading-spinner">
+                <span>Loading...</span>
+            </div>
         </div>
-        <app-add-comment [postId]="post.id"></app-add-comment>
+        <div class="add-comment-container">
+            <app-add-comment [postId]="post.id"></app-add-comment>
+        </div>
     </div>
 </div>
