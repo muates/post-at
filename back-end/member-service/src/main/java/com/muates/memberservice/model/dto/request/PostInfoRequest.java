@@ -5,7 +5,6 @@ import lombok.Data;
 import java.util.List;
 
 @Data
-public class PostWithCommentInfoRequest {
-    private Long postId;
-    private List<Long> commentIds;
+public class PostInfoRequest {
+    private List<Long> userIds;
 }

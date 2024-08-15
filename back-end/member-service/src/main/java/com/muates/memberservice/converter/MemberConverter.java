@@ -69,30 +69,16 @@ public class MemberConverter {
                 .build();
     }
 
-    public static List<PostMemberInfoResponse> convertMemberToPostInfoResponse(Map<Member, List<Member>> memberMap) {
-        if (memberMap == null) {
-            return null;
+    public static List<PostMemberInfoResponse> convertMemberToPostInfoResponse(List<Member> memberList) {
+        if (memberList.isEmpty()) {
+            return Collections.emptyList();
         }
 
-        return memberMap.entrySet().stream().map(entry -> {
-            Member postMember = entry.getKey();
-            List<Member> commentMembers = entry.getValue();
-
-            List<CommentMemberInfoResponse> commentMemberInfoResponse = commentMembers.stream().map(commentMember ->
-                    CommentMemberInfoResponse.builder()
-                            .userId(commentMember.getId())
-                            .username(commentMember.getUsername())
-                            .profilePicture(commentMember.getProfileImageUrl())
-                            .build()
-            ).collect(Collectors.toList());
-
-            return PostMemberInfoResponse.builder()
-                    .userId(postMember.getId())
-                    .username(postMember.getUsername())
-                    .profilePicture(postMember.getProfileImageUrl())
-                    .commentInfos(commentMemberInfoResponse)
-                    .build();
-        }).collect(Collectors.toList());
+        return memberList.stream().map(member -> PostMemberInfoResponse.builder()
+                .userId(member.getId())
+                .username(member.getUsername())
+                .profilePicture(member.getProfileImageUrl())
+                .build()).collect(Collectors.toList());
     }
 
     public static List<CommentMemberInfoResponse> convertMemberToCommentInfoResponse(List<Member> memberList) {

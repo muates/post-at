@@ -18,7 +18,7 @@ import com.muates.postservice.repository.PostCommentRepository;
 import com.muates.postservice.service.CommentService;
 import com.muates.postservice.service.PostService;
 import com.muates.postservice.service.delegate.CommentDelegateService;
-import lombok.RequiredArgsConstructor;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -27,19 +27,33 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 @Service
 @Transactional
-@RequiredArgsConstructor
 public class CommentServiceImpl implements CommentService {
 
     private final PostCommentRepository postCommentRepository;
-    private final PostService postService;
     private final KafkaConfigData kafkaConfigData;
     private final KafkaProducer<Long, SocialInteractionNotificationAvro> kafkaProducer;
     private final MemberClientService memberClientService;
     private final CommentDelegateService commentDelegateService;
+    private final PostService postService;
+
+    public CommentServiceImpl(PostCommentRepository postCommentRepository,
+                              KafkaConfigData kafkaConfigData,
+                              KafkaProducer<Long, SocialInteractionNotificationAvro> kafkaProducer,
+                              MemberClientService memberClientService,
+                              CommentDelegateService commentDelegateService,
+                              @Lazy PostService postService) {
+        this.postCommentRepository = postCommentRepository;
+        this.kafkaConfigData = kafkaConfigData;
+        this.kafkaProducer = kafkaProducer;
+        this.memberClientService = memberClientService;
+        this.commentDelegateService = commentDelegateService;
+        this.postService = postService;
+    }
 
     @Override
     public void commentToPost(CommentRequest request) {
@@ -88,8 +102,18 @@ public class CommentServiceImpl implements CommentService {
     }
 
     @Override
-    public int getCountByPostId(Long postId) {
+    public Integer getCountByPostId(Long postId) {
         return postCommentRepository.countByPostId(postId);
+    }
+
+    @Override
+    public Map<Long, Integer> getCountByPostIds(List<Long> postIds) {
+        List<Object[]> results = postCommentRepository.countByPostIds(postIds);
+        return results.stream()
+                .collect(Collectors.toMap(
+                        result -> ((Number) result[0]).longValue(),
+                        result -> ((Number) result[1]).intValue()
+                ));
     }
 
     private PostComment convertToPostComment(CommentRequest request, Post existPost) {

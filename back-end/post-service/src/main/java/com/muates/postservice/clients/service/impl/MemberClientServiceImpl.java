@@ -5,7 +5,7 @@ import com.muates.postservice.clients.model.request.CommentInfoRequest;
 import com.muates.postservice.clients.model.response.CommentMemberInfoResponse;
 import com.muates.postservice.clients.service.MemberClientService;
 import com.muates.postservice.exception.FeignClientExceptionHandler;
-import com.muates.postservice.clients.model.request.PostWithCommentInfoRequest;
+import com.muates.postservice.clients.model.request.PostInfoRequest;
 import com.muates.postservice.clients.model.response.PostMemberInfoResponse;
 import feign.FeignException;
 import io.github.resilience4j.circuitbreaker.CircuitBreaker;
@@ -31,9 +31,9 @@ public class MemberClientServiceImpl implements MemberClientService {
     private final FeignClientExceptionHandler exceptionHandler;
 
     @Override
-    public List<PostMemberInfoResponse> getMemberInfoForPosts(List<PostWithCommentInfoRequest> requests) {
+    public List<PostMemberInfoResponse> getMemberInfoForPosts(PostInfoRequest request) {
         return executeWithCircuitBreaker(
-                () -> fetchMemberInfoForPosts(requests),
+                () -> fetchMemberInfoForPosts(request),
                 this::handleFallback
         );
     }
@@ -46,9 +46,9 @@ public class MemberClientServiceImpl implements MemberClientService {
         );
     }
 
-    private List<PostMemberInfoResponse> fetchMemberInfoForPosts(List<PostWithCommentInfoRequest> requests) {
+    private List<PostMemberInfoResponse> fetchMemberInfoForPosts(PostInfoRequest request) {
         try {
-            ResponseEntity<List<PostMemberInfoResponse>> responseEntity = memberFeignClient.getMemberInfoForPost(requests);
+            ResponseEntity<List<PostMemberInfoResponse>> responseEntity = memberFeignClient.getMemberInfoForPost(request);
             if (responseEntity.getStatusCode().is2xxSuccessful()) {
                 return responseEntity.getBody();
             } else {

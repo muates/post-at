@@ -21,7 +21,7 @@ public class PostResponse {
     private Date updatedDate;
     private List<PostMediaResponse> media;
     private List<PostLikeResponse> likes;
-    private List<PostCommentResponse> comments;
+    private Integer commentCount;
     private String username;
     private String profilePicture;
 }

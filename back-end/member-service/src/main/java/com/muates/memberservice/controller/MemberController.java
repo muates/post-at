@@ -4,7 +4,7 @@ import com.muates.memberservice.converter.MemberConverter;
 import com.muates.memberservice.model.dto.request.CommentInfoRequest;
 import com.muates.memberservice.model.dto.request.MemberCreateRequest;
 import com.muates.memberservice.model.dto.request.MemberUpdateRequest;
-import com.muates.memberservice.model.dto.request.PostWithCommentInfoRequest;
+import com.muates.memberservice.model.dto.request.PostInfoRequest;
 import com.muates.memberservice.model.dto.response.CommentMemberInfoResponse;
 import com.muates.memberservice.model.dto.response.PostMemberInfoResponse;
 import com.muates.memberservice.model.dto.response.MemberResponse;
@@ -36,7 +36,7 @@ public class MemberController {
     }
 
     @PostMapping("/member-info-for-post")
-    public ResponseEntity<List<PostMemberInfoResponse>> getMemberInfoForPost(@RequestBody List<PostWithCommentInfoRequest> request) {
+    public ResponseEntity<List<PostMemberInfoResponse>> getMemberInfoForPost(@RequestBody PostInfoRequest request) {
         List<PostMemberInfoResponse> response = MemberConverter.convertMemberToPostInfoResponse(memberService.findMembers(request));
         return ResponseEntity.ok(response);
     }

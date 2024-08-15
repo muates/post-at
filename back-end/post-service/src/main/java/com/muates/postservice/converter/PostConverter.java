@@ -30,7 +30,23 @@ public class PostConverter {
                 .updatedDate(post.getUpdatedDate())
                 .media(PostMediaConverter.convertPostMediaToResponse(post.getMedia()))
                 .likes(PostLikeConverter.convertPostLikeToResponse(post.getLikes()))
-                .comments(PostCommentConverter.convertPostCommentToResponse(post.getComments()))
+                .build();
+    }
+
+    public static PostResponse convertPostToResponse(Post post, Integer commentCount) {
+        if (post == null) {
+            return null;
+        }
+
+        return PostResponse.builder()
+                .id(post.getId())
+                .userId(post.getUserId())
+                .content(post.getContent())
+                .createdDate(post.getCreatedDate())
+                .updatedDate(post.getUpdatedDate())
+                .media(PostMediaConverter.convertPostMediaToResponse(post.getMedia()))
+                .likes(PostLikeConverter.convertPostLikeToResponse(post.getLikes()))
+                .commentCount(commentCount)
                 .build();
     }
 }

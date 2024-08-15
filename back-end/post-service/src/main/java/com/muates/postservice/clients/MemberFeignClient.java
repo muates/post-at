@@ -1,7 +1,7 @@
 package com.muates.postservice.clients;
 
 import com.muates.postservice.clients.model.request.CommentInfoRequest;
-import com.muates.postservice.clients.model.request.PostWithCommentInfoRequest;
+import com.muates.postservice.clients.model.request.PostInfoRequest;
 import com.muates.postservice.clients.model.response.CommentMemberInfoResponse;
 import com.muates.postservice.clients.model.response.PostMemberInfoResponse;
 import org.springframework.cloud.openfeign.FeignClient;
@@ -15,7 +15,7 @@ import java.util.List;
 public interface MemberFeignClient {
 
     @PostMapping("/api/member/member-info-for-post")
-    ResponseEntity<List<PostMemberInfoResponse>> getMemberInfoForPost(@RequestBody List<PostWithCommentInfoRequest> requests);
+    ResponseEntity<List<PostMemberInfoResponse>> getMemberInfoForPost(@RequestBody PostInfoRequest request);
 
     @PostMapping("/api/member/member-info-for-comment")
     ResponseEntity<List<CommentMemberInfoResponse>> getMemberInfoForComment(@RequestBody CommentInfoRequest request);
