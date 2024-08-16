@@ -62,6 +62,12 @@
                 <span>Loading...</span>
             </div>
         </div>
+        <button *ngIf="comments.length < totalComments" class="load-more-comments" (click)="loadComments()">
+            Load More Comments
+        </button>
+        <div *ngIf="noMoreComments" class="no-more-comments">
+            No more comments found.
+        </div>
         <div class="add-comment-container">
             <app-add-comment [postId]="post.id"></app-add-comment>
         </div>

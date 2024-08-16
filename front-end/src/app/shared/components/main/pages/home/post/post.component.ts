@@ -18,13 +18,14 @@ export class PostComponent implements OnInit, AfterViewInit {
   currentIndex: number = 0;
   comments: PostCommentResponse[] = [];
   isLoadingComments: boolean = false;
+  pageSize: number = 10;
   currentPage: number = 0;
   totalComments: number = 0;
+  noMoreComments: boolean = false;
 
   constructor(private commentService: CommentService) { }
 
-  ngOnInit(): void {
-  }
+  ngOnInit(): void { }
 
   ngAfterViewInit(): void { }
 
@@ -33,40 +34,34 @@ export class PostComponent implements OnInit, AfterViewInit {
   }
 
   toggleComments() {
-    if (this.showComments) {
-      this.comments = [];
-      this.currentPage = 0;
-      this.totalComments = 0;
-    } else {
+    this.showComments = !this.showComments;
+    if (this.showComments && this.comments.length === 0) {
       this.loadComments();
     }
-    this.showComments = !this.showComments;
   }
 
   loadComments() {
     if (this.isLoadingComments) return;
     this.isLoadingComments = true;
 
-    this.commentService.getComments(this.post.id, this.currentPage, 10).subscribe(
-      response => {
+    this.commentService.getComments(this.post.id, this.currentPage, this.pageSize)
+      .subscribe(response => {
         this.comments = [...this.comments, ...response.content];
+
         this.totalComments = response.totalElements;
+        this.currentPage++;
+
+        this.noMoreComments = this.comments.length >= this.totalComments;
+
         this.isLoadingComments = false;
-      },
-      error => {
-        console.error('Error loading comments', error);
+      }, error => {
         this.isLoadingComments = false;
-      }
-    );
+      });
   }
 
-  @HostListener('window:scroll', [])
-  onScroll(): void {
-    if (this.showComments && window.innerHeight + window.scrollY >= document.body.offsetHeight) {
-      if (this.comments.length < this.totalComments && !this.isLoadingComments) {
-        this.currentPage++;
-        this.loadComments();
-      }
+  loadMoreComments() {
+    if (!this.noMoreComments && !this.isLoadingComments) {
+      this.loadComments();
     }
   }
 

@@ -3,7 +3,7 @@
     border-radius: 8px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     background-color: #fff;
-    margin: 16px auto 16px auto;
+    margin: 16px auto;
     padding: 16px;
     max-width: 600px;
 }
@@ -178,4 +178,21 @@
     box-shadow: 0 -2px 4px rgba(0, 0, 0, 0.1);
     z-index: 10;
     margin-top: auto;
+}
+
+.load-more-comments {
+    background-color: #f1f1f1;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    padding: 10px;
+    cursor: pointer;
+    text-align: center;
+    margin: 10px 0;
+}
+
+.no-more-comments {
+    text-align: center;
+    color: #888;
+    padding: 10px;
+    font-size: 14px;
 }
