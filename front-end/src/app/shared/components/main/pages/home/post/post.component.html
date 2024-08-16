@@ -63,10 +63,10 @@
             </div>
         </div>
         <button *ngIf="comments.length < totalComments" class="load-more-comments" (click)="loadComments()">
-            Load More Comments
+            <i class="fas fa-arrow-down"></i> Load More Comments
         </button>
         <div *ngIf="noMoreComments" class="no-more-comments">
-            No more comments found.
+            <i class="fas fa-info-circle"></i> No more comments found.
         </div>
         <div class="add-comment-container">
             <app-add-comment [postId]="post.id" [postOwnerId]="post.userId"></app-add-comment>

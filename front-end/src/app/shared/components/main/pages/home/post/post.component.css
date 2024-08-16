@@ -180,21 +180,30 @@
     margin-top: auto;
 }
 
-.load-more-comments {
-    background-color: #f1f1f1;
-    border: 1px solid #ddd;
-    border-radius: 5px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    padding: 10px;
+.load-more-comments,
+.no-more-comments {
+    display: flex;
+    align-items: center;
+    font-size: 16px;
     cursor: pointer;
-    text-align: center;
-    margin: 0 0 10px 0;
+    border: none;
+    background: none;
+    color: #003d97;
+    transition: color 0.3s ease;
+    margin: 0 auto 10px auto;
+}
+
+.load-more-comments i,
+.no-more-comments i {
+    margin-right: 8px;
+    font-size: 18px;
+}
+
+.load-more-comments:hover {
+    color: #002c77;
 }
 
 .no-more-comments {
-    text-align: center;
-    color: #888;
-    padding: 10px;
-    font-size: 14px;
-    margin: 0 0 10px 0;
+    color: #777;
+    font-style: italic;
 }
