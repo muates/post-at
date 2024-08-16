@@ -17,4 +17,14 @@ export class UserService {
   register(registerRequest: RegisterRequest): Observable<any> {
     return this.httpClient.post<any>(`${this.userUrl}/register`, registerRequest);
   }
+
+  getUserIdFromToken(): number | null {
+    const token = localStorage.getItem("token");
+    if (token) {
+      const payload = atob(token.split('.')[1]);
+      const decoded = JSON.parse(payload);
+      return decoded.userId;
+    }
+    return null;
+  }
 }
