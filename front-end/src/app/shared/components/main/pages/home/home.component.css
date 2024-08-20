@@ -1,0 +1,27 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    /* Dikey yerleşim için */
+    max-width: 800px;
+    margin: 16px auto 0 auto;
+    padding: 16px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    background-color: #fff;
+    height: calc(100vh - 94px);
+    box-sizing: border-box;
+}
+
+app-post-list {
+    flex: 1;
+    overflow: auto;
+}
+
+app-post-list::-webkit-scrollbar {
+    display: none;
+}
+
+app-post-list {
+    scrollbar-width: none;
+}

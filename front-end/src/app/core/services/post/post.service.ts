@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { PostResponse } from '../../models/post/response/post-response';
 import { Observable, catchError, throwError } from 'rxjs';
 import { Page } from '../../models/common/page';
+import { PostCreateRequest } from '../../models/post/request/post-create-request';
 
 @Injectable({
   providedIn: 'root'
@@ -27,4 +28,14 @@ export class PostService {
         })
       );
   }
+
+  createPost(postCreateRequest: PostCreateRequest): Observable<PostResponse> {
+    return this.httpClient.post<PostResponse>(`${this.postUrl}/create`, postCreateRequest).pipe(
+      catchError(error => {
+        console.error('Error creating post:', error);
+        return throwError(() => new Error('An error occurred while creating the post.'));
+      })
+    );
+  }
+  
 }

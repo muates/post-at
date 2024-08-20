@@ -1,0 +1,156 @@
+.container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 16px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    background-color: #fff;
+    position: relative; 
+    overflow: auto;
+    box-sizing: border-box;
+}
+
+
+.toggle-button {
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 200px;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    background-color: #6f42c1;
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.toggle-button i {
+    margin-right: 8px;
+}
+
+.toggle-button:hover {
+    background-color: #004494;
+}
+
+.toggle-button:focus {
+    outline: none;
+}
+
+.form-container {
+    transition: max-height 0.3s ease, opacity 0.3s ease;
+    overflow: hidden;
+}
+
+.form-container.open {
+    max-height: auto;
+    opacity: 1;
+}
+
+.form-container.closed {
+    max-height: 0;
+    opacity: 0;
+    padding: 0;
+    margin-bottom: 0;
+}
+
+.form-group {
+    margin-top: 1rem;
+}
+
+textarea,
+input[type="text"] {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    box-sizing: border-box;
+}
+
+textarea::placeholder {
+    color: #888;
+    font-style: italic;
+}
+
+button {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    background-color: #0056b3;
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+button:hover {
+    background-color: #004494;
+}
+
+button:focus {
+    outline: none;
+}
+
+.add-button {
+    display: block;
+    width: 200px;
+    margin: 1rem auto;
+    background-color: #28a745;
+}
+
+.add-button i {
+    margin-right: 5px;
+}
+
+.media-url-group {
+    display: flex;
+    align-items: center;
+    margin-bottom: 1rem;
+}
+
+.media-url-group input {
+    flex: 1;
+    padding: 8px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    margin: auto 10px 0 auto;
+}
+
+.remove-button {
+    background-color: #dc3545;
+    color: white;
+    border: none;
+    font-size: 16px;
+    padding: 0 12px;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+}
+
+.remove-button i {
+    margin: 0;
+}
+
+.submit-button {
+    display: block;
+    width: 100%;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    background-color: #0056b3;
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.submit-button:hover {
+    background-color: #004494;
+}
