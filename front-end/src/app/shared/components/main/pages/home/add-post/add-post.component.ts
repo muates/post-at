@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { PostCreateRequest } from 'src/app/core/models/post/request/post-create-request';
 import { MediaType } from 'src/app/core/models/post/request/post-media-create-request';
 import { UserService } from 'src/app/core/services/identity/user.service';
+import { PostObserverService } from 'src/app/core/services/observer/post-observer.service';
 import { PostService } from 'src/app/core/services/post/post.service';
 
 @Component({
@@ -15,7 +16,10 @@ export class AddPostComponent implements OnInit {
   mediaUrls: { mediaUrl: string, mediaType: MediaType }[] = [];
   showForm: boolean = false;
 
-  constructor(private postService: PostService, private userService: UserService) { }
+  constructor(
+    private postService: PostService,
+    private userService: UserService,
+    private postObserverService: PostObserverService) { }
 
   ngOnInit(): void {
   }
@@ -64,8 +68,9 @@ export class AddPostComponent implements OnInit {
     };
 
     this.postService.createPost(newPost).subscribe(response => {
-      console.log('Post created successfully', response);
+      this.postObserverService.addPost(response);
       this.resetForm();
+      this.showForm = false;
     });
   }
 

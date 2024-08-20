@@ -1,5 +1,6 @@
 import { Component, HostListener, OnInit } from '@angular/core';
 import { PostResponse } from 'src/app/core/models/post/response/post-response';
+import { PostObserverService } from 'src/app/core/services/observer/post-observer.service';
 import { PostService } from 'src/app/core/services/post/post.service';
 
 @Component({
@@ -14,10 +15,15 @@ export class PostListComponent implements OnInit {
   totalPages: number = 10;
   isLoading: boolean = false;
 
-  constructor(private postService: PostService) { }
+  constructor(
+    private postService: PostService, 
+    private postObserverService: PostObserverService) { }
 
   ngOnInit(): void {
     this.loadPosts();
+    this.postObserverService.post$.subscribe(post => {
+      this.posts.unshift(post);
+    });
   }
 
   loadPosts() {
