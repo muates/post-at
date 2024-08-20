@@ -10,11 +10,13 @@ import java.util.Set;
 
 public class CustomUserDetails implements UserDetails {
 
+    private Long userId;
     private String username;
     private String password;
     private Set<Role> roles;
 
     public CustomUserDetails(User user) {
+        this.userId = user.getId();
         this.username = user.getUsername();
         this.password = user.getPassword();
         this.roles = user.getRoles();
@@ -53,5 +55,9 @@ public class CustomUserDetails implements UserDetails {
     @Override
     public boolean isEnabled() {
         return true;
+    }
+
+    public Long getId() {
+        return userId;
     }
 }

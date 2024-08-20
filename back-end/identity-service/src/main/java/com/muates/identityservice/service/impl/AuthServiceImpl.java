@@ -1,6 +1,7 @@
 package com.muates.identityservice.service.impl;
 
 import com.muates.identityservice.model.dto.request.LoginRequest;
+import com.muates.identityservice.security.CustomUserDetails;
 import com.muates.identityservice.service.AuthService;
 import com.muates.identityservice.service.JwtService;
 import com.muates.identityservice.service.RolePermissionService;
@@ -36,8 +37,12 @@ public class AuthServiceImpl implements AuthService {
 
         SecurityContextHolder.getContext().setAuthentication(authentication);
 
+        CustomUserDetails userDetails = (CustomUserDetails) authentication.getPrincipal();
+        Long userId = userDetails.getId();
+
         return jwtService.generateToken(
                 authentication.getName(),
+                userId,
                 authentication.getAuthorities()
                         .stream()
                         .map(GrantedAuthority::getAuthority)
