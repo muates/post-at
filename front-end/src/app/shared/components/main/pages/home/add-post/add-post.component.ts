@@ -12,7 +12,7 @@ import { PostService } from 'src/app/core/services/post/post.service';
 export class AddPostComponent implements OnInit {
 
   postContent: string = '';
-  mediaUrls: string[] = [];
+  mediaUrls: { mediaUrl: string, mediaType: MediaType }[] = [];
   showForm: boolean = false;
 
   constructor(private postService: PostService, private userService: UserService) { }
@@ -20,9 +20,25 @@ export class AddPostComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  addMediaUrl() {
+  addImageUrl() {
     if (this.mediaUrls.length < 5) {
-      this.mediaUrls.push('');
+      this.mediaUrls.push({ mediaUrl: '', mediaType: MediaType.IMAGE });
+    } else {
+      alert('You can only add up to 5 media URLs.');
+    }
+  }
+
+  addVideoUrl() {
+    if (this.mediaUrls.length < 5) {
+      this.mediaUrls.push({ mediaUrl: '', mediaType: MediaType.VIDEO });
+    } else {
+      alert('You can only add up to 5 media URLs.');
+    }
+  }
+
+  addGifUrl() {
+    if (this.mediaUrls.length < 5) {
+      this.mediaUrls.push({ mediaUrl: '', mediaType: MediaType.GIF });
     } else {
       alert('You can only add up to 5 media URLs.');
     }
@@ -30,7 +46,7 @@ export class AddPostComponent implements OnInit {
 
   updateMediaUrl(index: number, event: Event) {
     const inputElement = event.target as HTMLInputElement;
-    this.mediaUrls[index] = inputElement.value;
+    this.mediaUrls[index].mediaUrl = inputElement.value;
   }
 
   submitPost() {
@@ -44,10 +60,7 @@ export class AddPostComponent implements OnInit {
     const newPost: PostCreateRequest = {
       userId: userId,
       content: this.postContent,
-      media: this.mediaUrls.map(url => ({
-        mediaUrl: url,
-        mediaType: url.startsWith('http') && (url.endsWith('.jpg') || url.endsWith('.png')) ? MediaType.IMAGE : MediaType.VIDEO
-      }))
+      media: this.mediaUrls
     };
 
     this.postService.createPost(newPost).subscribe(response => {
@@ -67,5 +80,18 @@ export class AddPostComponent implements OnInit {
 
   toggleForm() {
     this.showForm = !this.showForm;
+  }
+
+  getMediaIconClass(mediaType: MediaType): string {
+    switch (mediaType) {
+      case MediaType.IMAGE:
+        return 'fa-image';
+      case MediaType.VIDEO:
+        return 'fa-video';
+      case MediaType.GIF:
+        return 'fa fa-film';
+      default:
+        return '';
+    }
   }
 }

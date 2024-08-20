@@ -7,20 +7,31 @@
     <div class="form-container" [ngClass]="{'open': showForm, 'closed': !showForm}">
         <form (ngSubmit)="submitPost()">
             <div class="form-group">
-                <textarea id="postContent" [(ngModel)]="postContent" name="postContent" rows="4" required placeholder="Type your message here..."></textarea>
+                <textarea id="postContent" [(ngModel)]="postContent" name="postContent" rows="4" required
+                    placeholder="Type your message here..."></textarea>
             </div>
 
             <div class="form-group">
-                <button type="button" (click)="addMediaUrl()" class="add-button">
-                    <i class="fa fa-plus"></i> Add Media URL
-                </button>
-                <div *ngFor="let media of mediaUrls; let i = index" class="media-url-group">
-                    <input type="text" [value]="media" (input)="updateMediaUrl(i, $event)"
-                        placeholder="Enter media URL" />
-                    <button type="button" (click)="removeMediaUrl(i)" class="remove-button">
-                        <i class="fa fa-times"></i>
+                <div class="add-button-group">
+                    <button type="button" (click)="addImageUrl()" class="add-button">
+                        <i class="fa fa-image"></i> Add Image
+                    </button>
+                    <button type="button" (click)="addVideoUrl()" class="add-button">
+                        <i class="fa fa-video"></i> Add Video
+                    </button>
+                    <button type="button" (click)="addGifUrl()" class="add-button">
+                        <i class="fa fa-film"></i> Add GIF
                     </button>
                 </div>
+            </div>
+
+            <div *ngFor="let media of mediaUrls; let i = index" class="media-url-group">
+                <i class="fa" [ngClass]="getMediaIconClass(media.mediaType)"></i>
+                <input type="text" [value]="media.mediaUrl" (input)="updateMediaUrl(i, $event)"
+                    placeholder="Enter media URL" />
+                <button type="button" (click)="removeMediaUrl(i)" class="remove-button">
+                    <i class="fa fa-times"></i>
+                </button>
             </div>
 
             <button type="submit" class="submit-button">Submit Post</button>

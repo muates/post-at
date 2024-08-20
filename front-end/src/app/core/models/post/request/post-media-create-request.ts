@@ -5,5 +5,6 @@ export class PostMediaCreateRequest {
 
 export enum MediaType {
     IMAGE = 'IMAGE',
-    VIDEO = 'VIDEO'
+    VIDEO = 'VIDEO',
+    GIF = 'GIF'
 }
