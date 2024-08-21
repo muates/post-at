@@ -1,0 +1,45 @@
+server:
+  port: 8000
+
+identity-service:
+  url: http://localhost:8090
+
+spring:
+  application:
+    name: gateway-service
+  cloud:
+    gateway:
+      globalcors:
+        add-to-simple-url-handler-mapping: true
+
+      routes:
+        - id: identity-service
+          uri: lb://identity-service
+          predicates:
+            - Path=/api/auth/**, /api/users/**
+
+        - id: member-service
+          uri: lb://member-service
+          predicates:
+            - Path=/api/member/**
+          filters:
+            - JwtAuthenticationFilter
+
+        - id: post-service
+          uri: lb://post-service
+          predicates:
+            - Path=/api/post/**
+          filters:
+            - JwtAuthenticationFilter
+
+      discovery:
+        locator:
+          enabled: true
+          lower-case-service-id: true
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka/
+  instance:
+    prefer-ip-address: true

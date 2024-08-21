@@ -1,0 +1,33 @@
+<div class="container-fluid d-flex align-items-center justify-content-center">
+  <div class="row justify-content-center">
+    <div class="card">
+      <div class="card-header">
+        <h2 class="text-center">Login</h2>
+      </div>
+      <div class="card-body">
+        <form (ngSubmit)="login()">
+          <div class="form-group">
+            <label for="username">Username</label>
+            <input id="username" type="text" class="form-control" [(ngModel)]="loginRequest.username" name="username" required>
+          </div>
+          <div class="form-group">
+            <label for="password">Password</label>
+            <input id="password" type="password" class="form-control" [(ngModel)]="loginRequest.password" name="password" required>
+          </div>
+          <div class="login-forget-area">
+            <button type="submit" class="btn btn-primary btn-block">Login</button>
+            <a href="#">Forgot Password?</a>
+          </div>
+          <div class="register-area">
+            <span>Don't have an account?</span>
+            <button type="button" (click)="showRegister = !showRegister" class="btn btn-link p-0 m-0">Register</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div *ngIf="showRegister" class="register-dialog">
+  <app-register (closeRegister)="showRegister = false"></app-register>
+</div>

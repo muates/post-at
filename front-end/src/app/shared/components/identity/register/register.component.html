@@ -1,0 +1,32 @@
+<div class="register-form">
+    <button class="close-btn" (click)="close()">×</button>
+    <h2 class="text-center">Register</h2>
+    <form (ngSubmit)="onRegister()">
+        <div class="form-group">
+            <label for="username">Username</label>
+            <input id="username" type="text" class="form-control" [(ngModel)]="registerRequest.username" name="username"
+                required>
+        </div>
+        <div class="form-group">
+            <label for="email">Email</label>
+            <input id="email" type="email" class="form-control" [(ngModel)]="registerRequest.email" name="email"
+                required>
+        </div>
+        <div class="form-group">
+            <label for="password">Password</label>
+            <input id="password" type="password" class="form-control" [(ngModel)]="registerRequest.password"
+                name="password" required>
+        </div>
+        <button type="submit" class="btn btn-primary btn-block">Register</button>
+    </form>
+</div>
+
+<div *ngIf="showNotification" class="toast show position-fixed top-50 start-50 translate-middle p-3" role="alert" aria-live="assertive" aria-atomic="true">
+    <div class="toast-header">
+        <strong class="me-auto">Success</strong>
+        <button type="button" class="btn-close" (click)="closeNotification()" aria-label="Close"></button>
+    </div>
+    <div class="toast-body">
+        Registration successful!
+    </div>
+</div>
