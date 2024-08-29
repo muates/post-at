@@ -18,6 +18,10 @@ import { PostComponent } from './shared/components/main/pages/home/post/post.com
 import { AddCommentComponent } from './shared/components/main/pages/home/add-comment/add-comment.component';
 import { PostListComponent } from './shared/components/main/pages/home/post-list/post-list.component';
 import { AddPostComponent } from './shared/components/main/pages/home/add-post/add-post.component';
+import { ProfilePostComponent } from './shared/components/main/pages/profile/profile-post/profile-post.component';
+import { ProfileCommentComponent } from './shared/components/main/pages/profile/profile-comment/profile-comment.component';
+import { ProfileMediaComponent } from './shared/components/main/pages/profile/profile-media/profile-media.component';
+import { ProfileLikeComponent } from './shared/components/main/pages/profile/profile-like/profile-like.component';
 
 @NgModule({
   declarations: [
@@ -32,7 +36,11 @@ import { AddPostComponent } from './shared/components/main/pages/home/add-post/a
     PostComponent,
     AddCommentComponent,
     PostListComponent,
-    AddPostComponent
+    AddPostComponent,
+    ProfilePostComponent,
+    ProfileCommentComponent,
+    ProfileMediaComponent,
+    ProfileLikeComponent
   ],
   imports: [
     BrowserModule,

@@ -46,4 +46,10 @@ public class MemberController {
         List<CommentMemberInfoResponse> response = MemberConverter.convertMemberToCommentInfoResponse(memberService.findMembers(request));
         return ResponseEntity.ok(response);
     }
+
+    @GetMapping("/{memberId}")
+    public ResponseEntity<MemberResponse> getMember(@PathVariable Long memberId) {
+        MemberResponse response = MemberConverter.convertMemberToResponse(memberService.findMemberByMemberId(memberId));
+        return ResponseEntity.ok(response);
+    }
 }

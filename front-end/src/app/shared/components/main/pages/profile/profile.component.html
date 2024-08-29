@@ -1,1 +1,33 @@
-<p>profile works!</p>
+<div class="profile-container">
+    <div class="profile-header">
+        <img [src]="member.profileImageUrl || defaultProfilePicture" alt="Profile Image" class="profile-image">
+        <div class="profile-details">
+            <p class="profile-username">
+                {{ member.username }}
+            </p>
+            <p>{{ member.biography || 'No biography available.' }}</p>
+        </div>
+        <div class="profile-actions">
+            <button class="edit-profile-button">
+                <i class="fa fa-edit"></i> Edit Profile
+            </button>
+        </div>
+    </div>
+
+    <div class="profile-navigation">
+        <button (click)="viewPosts()">
+            <i class="fa fa-th-list"></i> Posts
+        </button>
+        <button (click)="viewComments()">
+            <i class="fa fa-comment"></i> Comments
+        </button>
+        <button (click)="viewMedia()">
+            <i class="fa fa-image"></i> Media
+        </button>
+        <button (click)="viewLikes()">
+            <i class="fa fa-heart"></i> Likes
+        </button>
+    </div>
+
+    <router-outlet></router-outlet>
+</div>
